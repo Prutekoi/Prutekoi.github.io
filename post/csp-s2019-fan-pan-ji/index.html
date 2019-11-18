@@ -9,10 +9,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1574078792656">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1574079791757">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -30,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1574078792656" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1574079791757" class="site-logo">
         <h1 class="site-title">Prutekoi的博客</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -137,7 +143,7 @@
 <p>晚上在床上跟zyw聊了会就睡了。明天一定要翻盘!!!</p>
 <h3 id="day2">Day2</h3>
 <p>昨天晚上又没睡好,还是一直做梦,还醒了几次。</p>
-<p>上了考场,突然好困啊,先在桌子上趴了会,也没睡着。~~不过听说南校有人考场上睡了两小时？？~~解压密码忘了...</p>
+<p>上了考场,突然好困啊,先在桌子上趴了会,也没睡着。~~不过听说南校有人考场上睡了两小时？？密码是ZhuaJinShiJian</p>
 <p>我今天的心态还是比较好的,慢条斯理地慢慢做。上来先把题都看了一遍。<br>
 T1没看完还以为是二分图匹配,看完之后暂时没什么思路<br>
 T2一看是个dp,有平方以为是个斜率优化,但是他那个限制太恶心了,应该不行。暴力分给的还挺足,有点底了<br>
@@ -168,6 +174,12 @@ T3是个树的重心的题,暴力分也挺足,而且想着都d2t3了应该正解
             
 
             
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
 
           </div>
 
@@ -191,6 +203,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '7d25e626199673e220e3',
+        clientSecret: '18275839c46c0e4e748c553c6a30d28aca3f634a',
+        repo: 'Prutekoi.github.io',
+        owner: 'Prutekoi',
+        admin: ['Prutekoi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 

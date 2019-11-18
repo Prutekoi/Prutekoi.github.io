@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi的博客</title>
-    <updated>2019-11-18T12:06:48.223Z</updated>
+    <updated>2019-11-18T12:24:41.091Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -56,7 +56,7 @@
 <p>晚上在床上跟zyw聊了会就睡了。明天一定要翻盘!!!</p>
 <h3 id="day2">Day2</h3>
 <p>昨天晚上又没睡好,还是一直做梦,还醒了几次。</p>
-<p>上了考场,突然好困啊,先在桌子上趴了会,也没睡着。~~不过听说南校有人考场上睡了两小时？？~~解压密码忘了...</p>
+<p>上了考场,突然好困啊,先在桌子上趴了会,也没睡着。~~不过听说南校有人考场上睡了两小时？？密码是ZhuaJinShiJian</p>
 <p>我今天的心态还是比较好的,慢条斯理地慢慢做。上来先把题都看了一遍。<br>
 T1没看完还以为是二分图匹配,看完之后暂时没什么思路<br>
 T2一看是个dp,有平方以为是个斜率优化,但是他那个限制太恶心了,应该不行。暴力分给的还挺足,有点底了<br>
