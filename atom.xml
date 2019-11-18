@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Gridea</title>
-    <updated>2019-11-18T05:10:49.825Z</updated>
+    <updated>2019-11-18T05:12:41.349Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://prutekoi.github.io/images/avatar.png</logo>
     <icon>https://prutekoi.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[Hello GitHubPages]]></title>
+        <id>https://prutekoi.github.io/post/hello-githubpages</id>
+        <link href="https://prutekoi.github.io/post/hello-githubpages">
+        </link>
+        <updated>2019-11-18T05:12:12.000Z</updated>
+        <content type="html"><![CDATA[<p>qwe</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://prutekoi.github.io/post/hello-gridea</id>
