@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi的博客</title>
-    <updated>2019-11-19T08:06:34.846Z</updated>
+    <updated>2019-11-19T08:50:47.848Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -152,6 +152,7 @@ T3是个树的重心的题,暴力分也挺足,而且想着都d2t3了应该正解
 <p>太神了吧233333我反正是没想到贪心,一眼就是dp啊qwq,ztb说这题dp之后打表可以看出有什么单调性,说不定zwj直接跳过dp的步骤,直接看出单调性的结论了qwq太强了qwq</p>
 <p>总而言之这场csp有人欢喜有人愁,很多比较强的选手都考挂退役了,四机房基本是空了。zwj1是要继续冲省选了。南校那群人天天嘲讽zwj,却大部分都没zwj考得高。这个人太神奇了,每场集训都要惊奇一下他为什么还没退役,照这么下去严重怀疑他要进省队继续noi 23333</p>
 <p>接下来文化课一段时间??qwq <s>我真的不会鸭</s></p>
+<p>upd:编译器救我狗命,d1t1只挂了5分!!HErk2了,哭了</p>
 ]]></content>
     </entry>
 </feed>
