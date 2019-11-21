@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-11-21T12:30:32.109Z</updated>
+    <updated>2019-11-21T12:35:45.472Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -30,9 +30,8 @@ void extend(int c){
         if(mxlen[q]==mxlen[p]+1)link[cur]=q;
         else{
             int clone=++tot;
-            mxlen[clone]=mxlen[p]+1;
             memcpy(trans[clone],trans[q],sizeof(trans[q]));
-            link[clone]=link[q];
+            link[clone]=link[q];mxlen[clone]=mxlen[p]+1;
             for(;p&amp;&amp;trans[p][c]==q;p=link[p])trans[p][c]=clone;
             link[q]=link[cur]=clone;
         }
