@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
-    <title>Prutekoi的博客</title>
-    <updated>2019-11-20T13:05:19.968Z</updated>
+    <title>Prutekoi&apos;s blog</title>
+    <updated>2019-11-21T02:00:37.179Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
     <logo>https://prutekoi.github.io/images/avatar.png</logo>
     <icon>https://prutekoi.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2019, Prutekoi的博客</rights>
+    <rights>All rights reserved 2019, Prutekoi&apos;s blog</rights>
     <entry>
         <title type="html"><![CDATA[BZOJ3509题解]]></title>
         <id>https://prutekoi.github.io/post/bzoj3509-ti-jie</id>
