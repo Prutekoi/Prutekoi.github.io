@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-11-21T12:07:49.448Z</updated>
+    <updated>2019-11-21T12:09:11.335Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -15,8 +15,7 @@
         <link href="https://prutekoi.github.io/post/sam">
         </link>
         <updated>2019-11-21T11:58:11.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="sam">SAM</h1>
-<p>先贴一个板子</p>
+        <content type="html"><![CDATA[<p>先贴一个板子</p>
 <pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 const int N=2e6+50;
