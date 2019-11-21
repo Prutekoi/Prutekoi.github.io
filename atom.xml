@@ -1,18 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://prutekoi.github.io</id>
+    <id>http://localhost:4000</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-11-21T04:35:58.268Z</updated>
+    <updated>2019-11-21T12:04:49.720Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://prutekoi.github.io"/>
-    <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
-    <logo>https://prutekoi.github.io/images/avatar.png</logo>
-    <icon>https://prutekoi.github.io/favicon.ico</icon>
+    <link rel="alternate" href="http://localhost:4000"/>
+    <link rel="self" href="http://localhost:4000/atom.xml"/>
+    <logo>http://localhost:4000/images/avatar.png</logo>
+    <icon>http://localhost:4000/favicon.ico</icon>
     <rights>All rights reserved 2019, Prutekoi&apos;s blog</rights>
     <entry>
+        <title type="html"><![CDATA[SAM]]></title>
+        <id>http://localhost:4000/post/sam</id>
+        <link href="http://localhost:4000/post/sam">
+        </link>
+        <updated>2019-11-21T11:58:11.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="sam">SAM</h1>
+<p>先贴一个板子</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define LL long long
+using namespace std;
+const int N=2e6+50;
+int n,mxlen[N],trans[N][26],link[N],tot=1,lst=1;char s[N];LL ans;
+void extend(int c){
+    int cur=++tot,p;
+    mxlen[cur]=mxlen[lst]+1;
+    for(p=lst;p&amp;&amp;!trans[p][c];p=link[p])trans[p][c]=cur;
+    if(!p)link[cur]=1;
+    else{
+        int q=trans[p][c];
+        if(mxlen[q]==mxlen[p]+1)link[cur]=q;
+        else{
+            int clone=++tot;
+            mxlen[clone]=mxlen[p]+1;
+            memcpy(trans[clone],trans[q],sizeof(trans[q]));
+            link[clone]=link[q];
+            for(;p&amp;&amp;trans[p][c]==q;p=link[p])trans[p][c]=clone;
+            link[q]=link[cur]=clone;
+        }
+    }
+    lst=cur;
+}
+</code></pre>
+<p>然后是一些性质。</p>
+<blockquote>
+<p>SAM是一个DAG。</p>
+</blockquote>
+<blockquote>
+<p>从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span>节点到自动机上任意一个节点的任意一条合法路径都对应了原串的一个子串。</p>
+</blockquote>
+<blockquote>
+<p>把节点称为状态,每个子串都仅属于一个状态。</p>
+</blockquote>
+<blockquote>
+<p>每一个状态包含了它包含的最长子串(长度设为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>x</mi><mi>l</mi><mi>e</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">mxlen</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">x</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span></span></span></span>)的一些连续长度的后缀。</p>
+</blockquote>
+<blockquote>
+<p>一个状态p包含的最短子串长度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>n</mi><mi>l</mi><mi>e</mi><mi>n</mi><mo>=</mo><mi>m</mi><mi>x</mi><mi>l</mi><mi>e</mi><mi>n</mi><mo>[</mo><mi>l</mi><mi>i</mi><mi>n</mi><mi>k</mi><mo>[</mo><mi>p</mi><mo>]</mo><mo>]</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">mnlen=mxlen[link[p]]+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">x</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mopen">[</span><span class="mord mathdefault">p</span><span class="mclose">]</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>。</p>
+</blockquote>
+<blockquote>
+<p>设一个子串<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span>属于状态<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>那么<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span>的所有后缀都包含在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span>由<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>i</mi><mi>n</mi><mi>k</mi></mrow><annotation encoding="application/x-tex">link</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>构成的链上。</p>
+</blockquote>
+<blockquote>
+<p>对于一个状态所包含的所有子串,它们的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi><mi>n</mi><mi>d</mi><mi>p</mi><mi>o</mi><mi>s</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">endpos()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>是相同的,即它们在原串中出现的次数和位置都是相同的。</p>
+</blockquote>
+<blockquote>
+<p>对于一个状态包含的子串的出现次数(即<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">∣</mo><mi>e</mi><mi>n</mi><mi>d</mi><mi>p</mi><mi>o</mi><mi>s</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo fence="true">∣</mo></mrow><annotation encoding="application/x-tex">\left|endpos(p)\right|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">∣</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mopen">(</span><span class="mord mathdefault">p</span><span class="mclose">)</span><span class="mclose delimcenter" style="top:0em;">∣</span></span></span></span></span>)可以通过<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>i</mi><mi>n</mi><mi>k</mi></mrow><annotation encoding="application/x-tex">link</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>求出。每次<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi><mi>x</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">extend</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span></span></span></span>时新增的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>u</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">cur</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>的次数为1,然后拓扑排序一下<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>n</mi><mi>t</mi><mo>[</mo><mi>l</mi><mi>i</mi><mi>n</mi><mi>k</mi><mo>[</mo><mi>p</mi><mo>]</mo><mo>]</mo><mo>+</mo><mo>=</mo><mi>c</mi><mi>n</mi><mi>t</mi><mo>[</mo><mi>p</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">cnt[link[p]]+=cnt[p]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mopen">[</span><span class="mord mathdefault">p</span><span class="mclose">]</span><span class="mclose">]</span><span class="mord">+</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">[</span><span class="mord mathdefault">p</span><span class="mclose">]</span></span></span></span></p>
+</blockquote>
+<p>构建SAM的复杂度是O(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>e</mi><mi>n</mi><mo>∗</mo></mrow><annotation encoding="application/x-tex">len*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord">∗</span></span></span></span>字符集大小)的,还可以用map优化到O(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>e</mi><mi>n</mi><mo>∗</mo><mi>l</mi><mi>o</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">len*log</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span>字符集大小)</p>
+<p>题目和详细的讲解可以做hihoCoder的后缀自动机专题,讲得真的不错(<s>我这个蒟蒻都能看懂</s>)。</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[BZOJ3509题解]]></title>
-        <id>https://prutekoi.github.io/post/bzoj3509-ti-jie</id>
-        <link href="https://prutekoi.github.io/post/bzoj3509-ti-jie">
+        <id>http://localhost:4000/post/bzoj3509-ti-jie</id>
+        <link href="http://localhost:4000/post/bzoj3509-ti-jie">
         </link>
         <updated>2019-11-20T08:42:34.000Z</updated>
         <content type="html"><![CDATA[<h3 id="bzoj3509">BZOJ3509</h3>
@@ -90,8 +152,8 @@ int main(){
     </entry>
     <entry>
         <title type="html"><![CDATA[斯特林数]]></title>
-        <id>https://prutekoi.github.io/post/si-te-lin-shu</id>
-        <link href="https://prutekoi.github.io/post/si-te-lin-shu">
+        <id>http://localhost:4000/post/si-te-lin-shu</id>
+        <link href="http://localhost:4000/post/si-te-lin-shu">
         </link>
         <updated>2019-11-19T12:12:44.000Z</updated>
         <content type="html"><![CDATA[<p>之前好多次听说过,但是因为没有碰到过对应的题所以就咕咕咕了。现在才好好学了这个东西。</p>
@@ -118,8 +180,8 @@ int main(){
     </entry>
     <entry>
         <title type="html"><![CDATA[latex大全]]></title>
-        <id>https://prutekoi.github.io/post/latex-da-quan</id>
-        <link href="https://prutekoi.github.io/post/latex-da-quan">
+        <id>http://localhost:4000/post/latex-da-quan</id>
+        <link href="http://localhost:4000/post/latex-da-quan">
         </link>
         <updated>2019-11-19T08:02:17.000Z</updated>
         <content type="html"><![CDATA[<p>我<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>太菜了,于是在这里粘一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>公式大全的链接供以后查阅qwq<br>
@@ -129,8 +191,8 @@ int main(){
     </entry>
     <entry>
         <title type="html"><![CDATA[多项式算法学习笔记]]></title>
-        <id>https://prutekoi.github.io/post/duo-xiang-shi-suan-fa-xue-xi-bi-ji</id>
-        <link href="https://prutekoi.github.io/post/duo-xiang-shi-suan-fa-xue-xi-bi-ji">
+        <id>http://localhost:4000/post/duo-xiang-shi-suan-fa-xue-xi-bi-ji</id>
+        <link href="http://localhost:4000/post/duo-xiang-shi-suan-fa-xue-xi-bi-ji">
         </link>
         <updated>2019-11-19T07:56:34.000Z</updated>
         <content type="html"><![CDATA[<p><s>吸毒开始了</s></p>
@@ -288,8 +350,8 @@ int main(){
     </entry>
     <entry>
         <title type="html"><![CDATA[CSP-S2019翻盘记]]></title>
-        <id>https://prutekoi.github.io/post/csp-s2019-fan-pan-ji</id>
-        <link href="https://prutekoi.github.io/post/csp-s2019-fan-pan-ji">
+        <id>http://localhost:4000/post/csp-s2019-fan-pan-ji</id>
+        <link href="http://localhost:4000/post/csp-s2019-fan-pan-ji">
         </link>
         <updated>2019-11-18T12:01:57.000Z</updated>
         <content type="html"><![CDATA[<p><s>蒟蒻说过考好了就开始写博客,于是这是我第一篇博客qwq</s></p>
