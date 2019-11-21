@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://localhost:4000</id>
+    <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-11-21T12:04:49.720Z</updated>
+    <updated>2019-11-21T12:07:49.448Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="http://localhost:4000"/>
-    <link rel="self" href="http://localhost:4000/atom.xml"/>
-    <logo>http://localhost:4000/images/avatar.png</logo>
-    <icon>http://localhost:4000/favicon.ico</icon>
+    <link rel="alternate" href="https://prutekoi.github.io"/>
+    <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
+    <logo>https://prutekoi.github.io/images/avatar.png</logo>
+    <icon>https://prutekoi.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Prutekoi&apos;s blog</rights>
     <entry>
         <title type="html"><![CDATA[SAM]]></title>
-        <id>http://localhost:4000/post/sam</id>
-        <link href="http://localhost:4000/post/sam">
+        <id>https://prutekoi.github.io/post/sam</id>
+        <link href="https://prutekoi.github.io/post/sam">
         </link>
         <updated>2019-11-21T11:58:11.000Z</updated>
         <content type="html"><![CDATA[<h1 id="sam">SAM</h1>
 <p>先贴一个板子</p>
 <pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
-#define LL long long
 using namespace std;
 const int N=2e6+50;
-int n,mxlen[N],trans[N][26],link[N],tot=1,lst=1;char s[N];LL ans;
+int n,mxlen[N],trans[N][26],link[N],tot=1,lst=1;char s[N];
 void extend(int c){
     int cur=++tot,p;
     mxlen[cur]=mxlen[lst]+1;
@@ -73,8 +72,8 @@ void extend(int c){
     </entry>
     <entry>
         <title type="html"><![CDATA[BZOJ3509题解]]></title>
-        <id>http://localhost:4000/post/bzoj3509-ti-jie</id>
-        <link href="http://localhost:4000/post/bzoj3509-ti-jie">
+        <id>https://prutekoi.github.io/post/bzoj3509-ti-jie</id>
+        <link href="https://prutekoi.github.io/post/bzoj3509-ti-jie">
         </link>
         <updated>2019-11-20T08:42:34.000Z</updated>
         <content type="html"><![CDATA[<h3 id="bzoj3509">BZOJ3509</h3>
@@ -152,8 +151,8 @@ int main(){
     </entry>
     <entry>
         <title type="html"><![CDATA[斯特林数]]></title>
-        <id>http://localhost:4000/post/si-te-lin-shu</id>
-        <link href="http://localhost:4000/post/si-te-lin-shu">
+        <id>https://prutekoi.github.io/post/si-te-lin-shu</id>
+        <link href="https://prutekoi.github.io/post/si-te-lin-shu">
         </link>
         <updated>2019-11-19T12:12:44.000Z</updated>
         <content type="html"><![CDATA[<p>之前好多次听说过,但是因为没有碰到过对应的题所以就咕咕咕了。现在才好好学了这个东西。</p>
@@ -180,8 +179,8 @@ int main(){
     </entry>
     <entry>
         <title type="html"><![CDATA[latex大全]]></title>
-        <id>http://localhost:4000/post/latex-da-quan</id>
-        <link href="http://localhost:4000/post/latex-da-quan">
+        <id>https://prutekoi.github.io/post/latex-da-quan</id>
+        <link href="https://prutekoi.github.io/post/latex-da-quan">
         </link>
         <updated>2019-11-19T08:02:17.000Z</updated>
         <content type="html"><![CDATA[<p>我<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>太菜了,于是在这里粘一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>公式大全的链接供以后查阅qwq<br>
@@ -191,8 +190,8 @@ int main(){
     </entry>
     <entry>
         <title type="html"><![CDATA[多项式算法学习笔记]]></title>
-        <id>http://localhost:4000/post/duo-xiang-shi-suan-fa-xue-xi-bi-ji</id>
-        <link href="http://localhost:4000/post/duo-xiang-shi-suan-fa-xue-xi-bi-ji">
+        <id>https://prutekoi.github.io/post/duo-xiang-shi-suan-fa-xue-xi-bi-ji</id>
+        <link href="https://prutekoi.github.io/post/duo-xiang-shi-suan-fa-xue-xi-bi-ji">
         </link>
         <updated>2019-11-19T07:56:34.000Z</updated>
         <content type="html"><![CDATA[<p><s>吸毒开始了</s></p>
@@ -350,8 +349,8 @@ int main(){
     </entry>
     <entry>
         <title type="html"><![CDATA[CSP-S2019翻盘记]]></title>
-        <id>http://localhost:4000/post/csp-s2019-fan-pan-ji</id>
-        <link href="http://localhost:4000/post/csp-s2019-fan-pan-ji">
+        <id>https://prutekoi.github.io/post/csp-s2019-fan-pan-ji</id>
+        <link href="https://prutekoi.github.io/post/csp-s2019-fan-pan-ji">
         </link>
         <updated>2019-11-18T12:01:57.000Z</updated>
         <content type="html"><![CDATA[<p><s>蒟蒻说过考好了就开始写博客,于是这是我第一篇博客qwq</s></p>
