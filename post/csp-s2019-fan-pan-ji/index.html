@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1574339661432">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1574477417808">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1574339661432" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1574477417808" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -150,10 +150,10 @@ T2一看是个dp,有平方以为是个斜率优化,但是他那个限制太恶�
 T3是个树的重心的题,暴力分也挺足,而且想着都d2t3了应该正解没戏了就先没想23333</p>
 <p>回去看T1,先想到容斥,于是发现先枚举一下,然后就一个背包一样的dp解决问题。刚开始以为是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>3</mn></msup><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^3m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span>的,有84分,做着做着发现复杂度好像可以少一个n,能A掉,后来却发现假了,还是84分。调了调就过了大样例了</p>
 <p>T2的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>暴力还是比较裸的,因为决策区间具有单调性,所以很快就敲完了。</p>
-<p>然后敲了T3裸的40分暴力,链的也非常显然,只要考虑每个点的贡献,次数非常好算,所以就有55分了。我对完全二叉树不是熟悉,所以不是很会那20分qwq</p>
+<p>然后敲了T3裸的40分暴力,链的也非常显然,只要考虑每个点的贡献,次数非常好算,所以就有55分了。我对完全二叉树不是很熟悉,所以不是很会那20分qwq</p>
 <p>然后开始想正解了,T1我觉得大体思路是对的,应该就是dp上优化了。想了一会觉得那两维状态好像都是必要的。去看T2了。</p>
 <p>T2的状态都是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>的,我觉得再优化可能就比较神仙了,所以当时就弃了这道题了。</p>
-<p>T3看的时候觉得d2t1应该不会那么难,一直在想要不要再回去看看。结果发现T3竟然有思路了?而且t1也就16分了,无伤大雅。开始刚T3。</p>
+<p>T3看的时候觉得d2t1应该不会那么难,一直在想要不要再回去看看。结果发现T3竟然有思路了?而且T1也就16分了,无伤大雅。开始刚T3。</p>
 <p>T3的做法显然是要考虑每个点的贡献,然后就是对于每个点算一下有多少边删掉会让他变成重心。我在纸上画了画,对于一个固定的点,删掉边的位置关系可以有3种,推了推式子,对于这三种情况,删掉的边子树的size都是取在一个区间内。于是基本上做法就马上出来了。借鉴一下天天爱跑步的思想,用一个全局的树状数组,进子树和出子树时差分一下就可以出来子树和了。对于祖先的一条链可以在dfs时直接用树状数组维护。就开始敲代码了。可能是当时有点慌,还是调了很长时间。不过因为我觉得这个做法一定没问题,所以调的时候有底气,因为样例都没过还是很好调的23333。</p>
 <p>最后10分钟的时候终于过了小样例,慌忙测了大样例,也过了。于是整理了下文件夹,还没来得及压压缩包就12点了。在监考员过来查收时压了压缩包。</p>
 <p>这次出了考场还是比较有底气的,毕竟T3调出来了,真是喜大普奔。跟杨总说了她看起来还挺高兴。后来发现T3可以直接用线段树合并,就像天天爱跑步一样。不过反正调出来了。</p>
