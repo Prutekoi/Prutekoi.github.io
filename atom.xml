@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-11-25T00:47:52.048Z</updated>
+    <updated>2019-11-25T00:51:03.049Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -21,9 +21,9 @@
 <p>在trie上建SAM的方法是插入p节点时先把lst置为父亲所在状态,<s>好像挺简单的</s>。若插入字符时当前节点已有这个出边,要像q一样判一下mxlen,具体看代码。</p>
 <p>例题:[ZJOI2015]诸神眷顾的幻想乡</p>
 <blockquote>
-<p>给你一棵字符构成的树,保证叶子节点不超过20个,问树上所有简单路径构成不同的字符串有多少。<br>
-这个就是广义SAM的裸题了。考虑叶子节点少,于是我们可以分别把这些叶子当根建SAM即可。</p>
+<p>给你一棵字符构成的树,保证叶子节点不超过20个,问树上所有简单路径构成不同的字符串有多少。</p>
 </blockquote>
+<p>这个就是广义SAM的裸题了。考虑叶子节点少,于是我们可以分别把这些叶子当根建SAM即可。</p>
 <p>对于在trie上建SAM还有一个小问题,就是遍历trie的方式。有bfs和dfs两种,那么选哪种呢?事实上,dfs是可以被卡成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>的。<br>
 <img src="https://prutekoi.github.io/post-images/1574642823785.png" alt=""><br>
 数据生成器:</p>
