@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1574643059106">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1574643403387">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1574643059106" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1574643403387" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -111,8 +111,8 @@
             <div class="post-date">2019-11-25</div>
             
             <div class="post-content">
-              <p>广义SAM用来处理多个字符串的子串的问题。一般是先建trie,再再trie上建SAM。<br>
-复杂度是O(trie树节点)的。所以一般复杂度和加特殊字符拼接好像没什么区别。<br>
+              <p>广义SAM用来处理多个字符串的子串的问题。一般是先建trie,再在trie上建SAM。<br>
+复杂度是O(trie树节点数)的。所以一般复杂度和加特殊字符拼接好像没什么区别。<br>
 不过如果trie树是题目给你的那就可以放心用了。</p>
 <p>在trie上建SAM的方法是插入p节点时先把lst置为父亲所在状态,<s>好像挺简单的</s>。若插入字符时当前节点已有这个出边,要像q一样判一下mxlen,具体看代码。</p>
 <p>例题:[ZJOI2015]诸神眷顾的幻想乡</p>
