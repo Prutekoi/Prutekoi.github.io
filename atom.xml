@@ -2,13 +2,97 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-11-24T10:32:19.145Z</updated>
+    <updated>2019-11-25T00:47:52.048Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
     <logo>https://prutekoi.github.io/images/avatar.png</logo>
     <icon>https://prutekoi.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Prutekoi&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[广义SAM]]></title>
+        <id>https://prutekoi.github.io/post/guang-yi-sam</id>
+        <link href="https://prutekoi.github.io/post/guang-yi-sam">
+        </link>
+        <updated>2019-11-25T00:30:32.000Z</updated>
+        <content type="html"><![CDATA[<p>广义SAM用来处理多个字符串的子串的问题。一般是先建trie,再再trie上建SAM。<br>
+复杂度是O(trie树节点)的。所以一般复杂度和加特殊字符拼接好像没什么区别。<br>
+不过如果trie树是题目给你的那就可以放心用了。</p>
+<p>在trie上建SAM的方法是插入p节点时先把lst置为父亲所在状态,<s>好像挺简单的</s>。若插入字符时当前节点已有这个出边,要像q一样判一下mxlen,具体看代码。</p>
+<p>例题:[ZJOI2015]诸神眷顾的幻想乡</p>
+<blockquote>
+<p>给你一棵字符构成的树,保证叶子节点不超过20个,问树上所有简单路径构成不同的字符串有多少。<br>
+这个就是广义SAM的裸题了。考虑叶子节点少,于是我们可以分别把这些叶子当根建SAM即可。</p>
+</blockquote>
+<p>对于在trie上建SAM还有一个小问题,就是遍历trie的方式。有bfs和dfs两种,那么选哪种呢?事实上,dfs是可以被卡成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>的。<br>
+<img src="https://prutekoi.github.io/post-images/1574642823785.png" alt=""><br>
+数据生成器:</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=1e5;
+int n=N-1,m=N&gt;&gt;1;
+int main(){
+    printf(&quot;%d\n&quot;,n);
+    for(int i=1;i&lt;=m;i++)printf(&quot;0 &quot;);
+    for(int i=m+1;i&lt;=n;i++)printf(&quot;1 &quot;);
+    puts(&quot;&quot;);
+    for(int i=m+1;i&lt;=n;i++)printf(&quot;%d %d\n&quot;,n-i+1,i);
+    for(int i=2;i&lt;=m;i++)printf(&quot;%d %d\n&quot;,i-1,i);
+    return 0;
+}
+</code></pre>
+<p>但是对于这道题目,dfs的遍历方式是可以A掉的,叶子数的限制使得他无法构造这样的数据。<br>
+贴上bfs的代码:</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define LL long long
+using namespace std;
+const int N=2e6+50;
+int n,c,a[N],ver[N],nxt[N],head[N],tot,d[N],p[N],link[N],trans[N][10],mxlen[N],cnt=1,lst=1,q[N],l,r,f[N];LL ans;
+int read(){
+	int x=0,c;
+	while(!isdigit(c=getchar()));
+	while(isdigit(c))x=x*10+(c^48),c=getchar();
+	return x;
+}
+void add(int x,int y){ver[++tot]=y;nxt[tot]=head[x];head[x]=tot;d[y]++;}
+void extend(int c){
+	int cur=0,p=lst;
+	if(!trans[p][c])lst=cur=++cnt,mxlen[cur]=mxlen[p]+1;
+	for(;p&amp;&amp;!trans[p][c];p=link[p])trans[p][c]=cur;
+	if(!p)link[cur]=1;
+	else{
+		int q=trans[p][c];
+		if(mxlen[q]==mxlen[p]+1){cur?link[cur]=q:lst=q;}
+		else{
+			int nq=++cnt;cur?0:lst=nq;
+			memcpy(trans[nq],trans[q],sizeof(trans[q]));
+			mxlen[nq]=mxlen[p]+1;link[nq]=link[q];
+			for(;p&amp;&amp;trans[p][c]==q;p=link[p])trans[p][c]=nq;
+			link[q]=nq;if(cur)link[cur]=nq;
+		}
+	}
+}
+void bfs(int x){
+    q[l=r=1]=x;f[x]=0;
+    while(l&lt;=r){
+        int x=q[l++];
+        lst=p[f[x]];extend(a[x]);p[x]=lst;
+        for(int i=head[x],y;i;i=nxt[i])if((y=ver[i])^f[x])f[y]=x,q[++r]=y;
+    }
+}
+int main(){
+	scanf(&quot;%d%d&quot;,&amp;n,&amp;c);p[0]=1;
+	for(int i=1;i&lt;=n;i++)a[i]=read();
+	for(int i=1,x,y;i&lt;n;i++)x=read(),y=read(),add(x,y),add(y,x);
+	for(int i=1;i&lt;=n;i++)if(d[i]==1)bfs(i);
+	for(int i=2;i&lt;=cnt;i++)ans+=mxlen[i]-mxlen[link[i]];
+	printf(&quot;%lld\n&quot;,ans);
+	return 0;
+}
+</code></pre>
+<p>完结撒花!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[burnside引理和Polya定理]]></title>
         <id>https://prutekoi.github.io/post/burnside-yin-li-he-polya-ding-li</id>
@@ -50,7 +134,8 @@
 <p>考虑递推,假设已经知道了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>只猴子时编号为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的猴子会成为大王。<br>
 而且我们知道<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>只猴子时第一个出圈的是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo>)</mo><mi mathvariant="normal">%</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">(m-1)\%n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">%</span><span class="mord mathdefault">n</span></span></span></span>号猴子,那么可以把剩下的猴子重编号成为子问题。可以推出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mi>m</mi><mo>)</mo><mi mathvariant="normal">%</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">(x+m)\%n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span><span class="mord">%</span><span class="mord mathdefault">n</span></span></span></span>会成为大王。<br>
 于是有一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>递推的做法。</p>
-<p>特别地,当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">m=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>时我们有更优秀的做法。首先,若<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">n=2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.849108em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span>则易得<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>号猴子就是大王。设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><msup><mn>2</mn><mi>k</mi></msup><mo>+</mo><mi>t</mi><mo separator="true">,</mo><mi>t</mi><mo>&lt;</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">n=2^k+t,t&lt;2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.932438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.849108em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span>,则考虑先<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>个猴子出圈之后下一只猴子就是大王。于是易得<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mo>∗</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">2*t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>号猴子成为大王。</p>
+<p>特别地,当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">m=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>,猴子编号从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>时我们有更优秀的做法。首先,若<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">n=2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.849108em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span>则易得<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>号猴子就是大王。设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><msup><mn>2</mn><mi>k</mi></msup><mo>+</mo><mi>t</mi><mo separator="true">,</mo><mi>t</mi><mo>&lt;</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">n=2^k+t,t&lt;2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.932438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.849108em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span>,则考虑先<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span>个猴子出圈之后下一只猴子就是大王。于是易得<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mo>∗</mo><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2*t+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69841em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>号猴子成为大王。<br>
+值得一提的是,设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">J(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.09618em;">J</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>只猴子时的答案,则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">J(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.09618em;">J</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>即为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>在二进制下循环左移一位,这个通过刚才推得的结论易得。</p>
 ]]></content>
     </entry>
     <entry>
@@ -509,81 +594,6 @@ int main(){
     for(int i=0;i&lt;n+m-1;i++)printf(&quot;%d %d\n&quot;,i-m+1,(int)(a[i].x+0.5));
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CSP-S2019翻盘记]]></title>
-        <id>https://prutekoi.github.io/post/csp-s2019-fan-pan-ji</id>
-        <link href="https://prutekoi.github.io/post/csp-s2019-fan-pan-ji">
-        </link>
-        <updated>2019-11-18T12:01:57.000Z</updated>
-        <content type="html"><![CDATA[<p><s>蒟蒻说过考好了就开始写博客,于是这是我第一篇博客qwq</s></p>
-<h3 id="day0">Day0</h3>
-<p>这天早上起来先去了机房,毕竟八点五十的火车嘛,八点再去火车站也不迟,把DAY-1晚上<s>虐爆我的</s>那场div2又好好看了看qwq。</p>
-<p>快八点的时候开始往学校外面走,看到门岗就觉得不妙,<s>我就说我好像忘了点什么</s>,没假条啊!!!哭了555。</p>
-<p>还好回去找小杰一找就找到了,他还鼓励叮嘱了我一番,心里挺舒服的。最后也顺利到了火车站233,没有提前退役。</p>
-<p>这一整天所有人都在奶我qwq。不过我倒是有点习惯了23333</p>
-<p>下午试机的时候那个键盘真用不习惯hhh,跟笔记本电脑不一样是正常的,但是跟本部机房的键盘也不一样,不过敲了一会就好了,我就敲了一个区间加区间求和的线段树qwq,刚开始还没build,菜炸qwq。去试了试linux的虚拟机,竟然忘了终端怎么开了!!我记得有一个Alt,所以我按住Alt然后另一个从A-Z一个个试都没试出来2333,不过后来想起来了是 Ctrl+Alt+t。</p>
-<p><s>话说试了虚拟机毛用没有,考试的时候根本就没时间去那玩意下测</s></p>
-<p>回来之后看他们去吃饭了我就一块去了233,饭竟然比本部的还便宜!</p>
-<p><s>可能是润德的太贵了,我就感觉本部的便宜,碰上更便宜的就震惊了</s></p>
-<p>吃饭回来碰上了z7z_Eta,跟他聊了一会,他好像对大厅的那个复古的画特别感兴趣2333</p>
-<p>晚上跟杨总他们又去吃了一次233,墨队说他要打元气我就跟他联机了嘛,而且我是现场更新之后才能跟他联,<s>我真的平常没有打qwq</s>。</p>
-<p>听墨队说晚上有牛客,我看了看题,第一道是水题,不过要注意二进制下一串1不能直接2的次幂减1,因为2的64次方会溢出的,<s>怎么这时候脑子这么清醒?跟DAY1换一换好不好啊??</s></p>
-<p>张子初说他晚上要晚点睡,因为我舍友也睡得晚,所以跟我换了换,我晚上十点半就睡觉了。</p>
-<p>我觉得我的心态还是挺好的,因为我觉得我挺自信的 23333 <s>蜜汁自信</s></p>
-<h3 id="day1">Day1</h3>
-<p>昨天晚上一直做关于考试的梦。自从要考CSP以来别人都随着日子一天天接近一点点焦虑起来了,而我并没有,<s>可能我心比较大</s>,不过考前终于开始做梦了233</p>
-<p>上了考场,果然还是会紧张啊555555。解压密码是Ren2Zhen0Si1Kao9?</p>
-<p>打开pdf,赶紧读题。哎我也不知道我慌什么。d1应该时间是比较充裕的,<s>平常的考试经常都能剩半到一个小时</s></p>
-<p>T1是一个二进制的题,给n和k求出第k个格雷码。我先眼看样例找规律没找到,打了个暴力找规律还是没啥规律,然后突然发现智障了,这题直接按照题意模拟就好了,是一个递归的过程。qwq。所以很快就切了开下一题了。qwq。</p>
-<p>T2是树上的括号序列的问题。我觉得我对括号序列还是比较熟悉的,所以基本上马上就把做法想出来了。飞快地写完之后过了小样例,但是过不了大样例,然后信仰玄学改了一句之后就过了大样例,不过我却很疑惑为什么要改这么一句。</p>
-<p>去看了T3之后求稳开始打T2的对拍,暴力还要调一调才能过样例233</p>
-<p>果然第一发就拍WA了555,于是有点小慌,赶紧调小数据,却发现数据小了就拍不出来了/泪奔, 这怎么调??看来只能静态查错了。于是我决定先看看刚才那句为什么要改。我模拟了一会之后终于懂得了这句话的重要性。</p>
-<p><s>竟然是先改了才知道为什么要改,可能是t1的rp给了t2吧233</s></p>
-<p>于是发现与这句话对应的一句话也要改。于是就过了对拍啦啦啦</p>
-<p>心情好,也受noip2018day1的影响,觉得现在还有两个多小时刚T3应该没问题。这是一整场cf的时间我就刚一道联赛题还刚不出来??结果想得太naive了敲完过不了样例看样例一点点调试,代码复杂度一点点上升,终于过了第一个样例却过不了第二个样例,这时终于意识到这个做法根本没有前途。。。</p>
-<p>开始敲暴力,不过这时剩的时间真的不多了,就一个小时都不到。顺利地敲完了10分的next_permutation,觉得菊花的可能更优美一些,于是先想菊花。结果发现这情况实在是太多了!!!想了一会竟然不会写!!!wdnmd出题人不是人!弃了菊花,发现链的可能还稍微可做一点,不过细节也很多,说不定是我当时直接想假了...</p>
-<p>于是果断决定放过自己听天由命,不过还是很自闭,怎么能有只得10分的题呢??别人是不是把菊花和链的都写了?整理完文件夹之后又等了十几分钟吧就12点了。蜜汁自信,觉得T2过了对拍,T1又是直接模拟,不会有事的..<s>为什么不再去检查一下T1??</s></p>
-<p>出来之后我都不想说我估分,感觉太低了..过了好一会才说出我只得了210这个事实, <s>如果真得了210就好了555</s>。不过发现群里都在说自闭210什么的,我就稍微平衡点。路上还问他们T1有没有开ull,墨队没开,我还觉得我开了非常好555。</p>
-<p>中午发了程序要确认,我看程序的时候却一眼看到致命错误/喷血。当时觉得我挂了5分,还敢跟杨总说。要是我一开始就知道挂了50说不定就不敢跟她说了555,后来看牛客数据范围,竟然没约束n??阴险的出题人,又想坑我/泪奔,又看洛谷的数据范围也没有。我自闭了</p>
-<p>为啥昨天晚上刚做过这种左移溢出的题,今天就忘了??老天已经给我一个很好的机遇,而我却选择视而不见..</p>
-<p>墨队跟我说他忘建子文件夹了,我:?????<br>
-明明之前专门提过,怎么就忘了呢?哎太惨了</p>
-<p>我有一个小时候的好朋友今年刚考上燕大,他跟我说在这个大学的时候我就跟他说考试的时候会去,他也很惊喜。于是下午让他带着我逛了两圈,还因为没带钱让他请我吃了顿饭555。学校里还有公交车,坐的人还挺多,学校挺大,东西挺多,不过我挂了50可能没有学上了555555555555555。</p>
-<p>回来之后跟杨总聊了会,杨总一直跟我说不会挂50的,毕竟在哪里测都是只挂5分。我觉得我的心态还是没什么问题,毕竟虽然我一直说挂了50,但是心里还是觉得不会挂50,<s>我好fAKe</s>,而且有蜜汁自信觉得明天可以翻盘。</p>
-<p>之后上去找老头他们玩了,给他测了测,考了165,<s>比我高,自闭了</s>,我觉得我也做不下去题,<s>看了一晚上开哥的视频防抑郁。</s></p>
-<p>快十点的时候杨总让我下去给俩初中小孩的普及测成绩,他们考的还行吧,我也没仔细看题/xk,不过送分的T1有可能爆零是有点遗憾。</p>
-<p>螃蟹真香(狗头)</p>
-<p>晚上在床上跟zyw聊了会就睡了。明天一定要翻盘!!!</p>
-<h3 id="day2">Day2</h3>
-<p>昨天晚上又没睡好,还是一直做梦,还醒了几次。</p>
-<p>上了考场,突然好困啊,先在桌子上趴了会,也没睡着。<s>不过听说南校有人考场上睡了两小时</s>??密码是ZhuaJinShiJian</p>
-<p>我今天的心态还是比较好的,慢条斯理地慢慢做。上来先把题都看了一遍。<br>
-T1没看完还以为是二分图匹配,看完之后暂时没什么思路<br>
-T2一看是个dp,有平方以为是个斜率优化,但是他那个限制太恶心了,应该不行。暴力分给的还挺足,有点底了<br>
-T3是个树的重心的题,暴力分也挺足,而且想着都d2t3了应该正解没戏了就先没想23333</p>
-<p>回去看T1,先想到容斥,于是发现先枚举一下,然后就一个背包一样的dp解决问题。刚开始以为是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>3</mn></msup><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^3m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span>的,有84分,做着做着发现复杂度好像可以少一个n,能A掉,后来却发现假了,还是84分。调了调就过了大样例了</p>
-<p>T2的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>暴力还是比较裸的,因为决策区间具有单调性,所以很快就敲完了。</p>
-<p>然后敲了T3裸的40分暴力,链的也非常显然,只要考虑每个点的贡献,次数非常好算,所以就有55分了。我对完全二叉树不是很熟悉,所以不是很会那20分qwq</p>
-<p>然后开始想正解了,T1我觉得大体思路是对的,应该就是dp上优化了。想了一会觉得那两维状态好像都是必要的。去看T2了。</p>
-<p>T2的状态都是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>的,我觉得再优化可能就比较神仙了,所以当时就弃了这道题了。</p>
-<p>T3看的时候觉得d2t1应该不会那么难,一直在想要不要再回去看看。结果发现T3竟然有思路了?而且T1也就16分了,无伤大雅。开始刚T3。</p>
-<p>T3的做法显然是要考虑每个点的贡献,然后就是对于每个点算一下有多少边删掉会让他变成重心。我在纸上画了画,对于一个固定的点,删掉边的位置关系可以有3种,推了推式子,对于这三种情况,删掉的边子树的size都是取在一个区间内。于是基本上做法就马上出来了。借鉴一下天天爱跑步的思想,用一个全局的树状数组,进子树和出子树时差分一下就可以出来子树和了。对于祖先的一条链可以在dfs时直接用树状数组维护。就开始敲代码了。可能是当时有点慌,还是调了很长时间。不过因为我觉得这个做法一定没问题,所以调的时候有底气,因为样例都没过还是很好调的23333。</p>
-<p>最后10分钟的时候终于过了小样例,慌忙测了大样例,也过了。于是整理了下文件夹,还没来得及压压缩包就12点了。在监考员过来查收时压了压缩包。</p>
-<p>这次出了考场还是比较有底气的,毕竟T3调出来了,真是喜大普奔。跟杨总说了她看起来还挺高兴。后来发现T3可以直接用线段树合并,就像天天爱跑步一样。不过反正调出来了。</p>
-<p>中午发程序公示的时候我真的慌,因为最后太紧了怕文件出错了什么的/xk。不过没啥事。</p>
-<p>他们T3一人说一个做法,不过都没人写出来233。ztb说是树剖,群上说是换根,山西那个神仙说是倍增。没关系233。</p>
-<p>听说z7z_Eta d1t2挂了,表示比较惋惜。今年二中已经这么爆炸了。太惨了。</p>
-<p>下午坐火车回去了。车上先在牛客测了t1,没问题是84。然后测T2,爆零了!!当时我脑子就炸了,我又测了测样例,没输出调试啊。赶紧看是怎么回事,看到T2数据只有一个点。看别人有ac的,打开一看数据也是一个点,代码竟然是puts(&quot;1&quot;)<br>
-群上说t2没数据,真吓我一跳...</p>
-<p>t2有数据以后测了t2,没问题是64。</p>
-<p>等了一会牛客还是没t3数据,ztb说oitiku有t3数据。我都没听说过这个oj,不过现场注册了之后赶紧测了T3,测的时候我可煎熬了。不过我A了QAQ。我真当场特别激动,直接去群里发了&quot;我爽了&quot;&quot;248牛逼&quot;,然后引起一群人膜拜23333</p>
-<p>Day2没挂分心里就轻松了,听前面zwj1扯皮吹牛逼,他小嘴就跟抹了蜜似的2333(十分素质)听他说他t2敲了一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>贪心,于是ddy就想zwj的贪心肯定是错的然后打击他?他跟我说赶紧测zwj的t2。于是我就测了。md怎么这么高????88?????震惊了,ddy也震惊了,zwj倒是没震惊,<s>他这个人好像就不会震惊</s>,他说他去3车厢吹去了233333</p>
-<p>太神了吧233333我反正是没想到贪心,一眼就是dp啊qwq,ztb说这题dp之后打表可以看出有什么单调性,说不定zwj直接跳过dp的步骤,直接看出单调性的结论了qwq太强了qwq</p>
-<p>总而言之这场csp有人欢喜有人愁,很多比较强的选手都考挂退役了,四机房基本是空了。zwj1是要继续冲省选了。南校那群人天天嘲讽zwj,却大部分都没zwj考得高。这个人太神奇了,每场集训都要惊奇一下他为什么还没退役,照这么下去严重怀疑他要进省队继续noi 23333</p>
-<p>接下来文化课一段时间??qwq <s>我真的不会鸭</s></p>
-<p>upd:编译器救我狗命,d1t1只挂了5分!!HErk2了,哭了</p>
 ]]></content>
     </entry>
 </feed>

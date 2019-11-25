@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>广义SAM | Prutekoi&#39;s blog</title>
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1574642868768">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153103856-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-153103856-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://prutekoi.github.io">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1574642868768" class="site-logo">
+        <h1 class="site-title">Prutekoi&#39;s blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://prutekoi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">广义SAM</h2>
+            <div class="post-date">2019-11-25</div>
+            
+            <div class="post-content">
+              <p>广义SAM用来处理多个字符串的子串的问题。一般是先建trie,再再trie上建SAM。<br>
+复杂度是O(trie树节点)的。所以一般复杂度和加特殊字符拼接好像没什么区别。<br>
+不过如果trie树是题目给你的那就可以放心用了。</p>
+<p>在trie上建SAM的方法是插入p节点时先把lst置为父亲所在状态,<s>好像挺简单的</s>。若插入字符时当前节点已有这个出边,要像q一样判一下mxlen,具体看代码。</p>
+<p>例题:[ZJOI2015]诸神眷顾的幻想乡</p>
+<blockquote>
+<p>给你一棵字符构成的树,保证叶子节点不超过20个,问树上所有简单路径构成不同的字符串有多少。<br>
+这个就是广义SAM的裸题了。考虑叶子节点少,于是我们可以分别把这些叶子当根建SAM即可。</p>
+</blockquote>
+<p>对于在trie上建SAM还有一个小问题,就是遍历trie的方式。有bfs和dfs两种,那么选哪种呢?事实上,dfs是可以被卡成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>的。<br>
+<img src="https://prutekoi.github.io/post-images/1574642823785.png" alt=""><br>
+数据生成器:</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=1e5;
+int n=N-1,m=N&gt;&gt;1;
+int main(){
+    printf(&quot;%d\n&quot;,n);
+    for(int i=1;i&lt;=m;i++)printf(&quot;0 &quot;);
+    for(int i=m+1;i&lt;=n;i++)printf(&quot;1 &quot;);
+    puts(&quot;&quot;);
+    for(int i=m+1;i&lt;=n;i++)printf(&quot;%d %d\n&quot;,n-i+1,i);
+    for(int i=2;i&lt;=m;i++)printf(&quot;%d %d\n&quot;,i-1,i);
+    return 0;
+}
+</code></pre>
+<p>但是对于这道题目,dfs的遍历方式是可以A掉的,叶子数的限制使得他无法构造这样的数据。<br>
+贴上bfs的代码:</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define LL long long
+using namespace std;
+const int N=2e6+50;
+int n,c,a[N],ver[N],nxt[N],head[N],tot,d[N],p[N],link[N],trans[N][10],mxlen[N],cnt=1,lst=1,q[N],l,r,f[N];LL ans;
+int read(){
+	int x=0,c;
+	while(!isdigit(c=getchar()));
+	while(isdigit(c))x=x*10+(c^48),c=getchar();
+	return x;
+}
+void add(int x,int y){ver[++tot]=y;nxt[tot]=head[x];head[x]=tot;d[y]++;}
+void extend(int c){
+	int cur=0,p=lst;
+	if(!trans[p][c])lst=cur=++cnt,mxlen[cur]=mxlen[p]+1;
+	for(;p&amp;&amp;!trans[p][c];p=link[p])trans[p][c]=cur;
+	if(!p)link[cur]=1;
+	else{
+		int q=trans[p][c];
+		if(mxlen[q]==mxlen[p]+1){cur?link[cur]=q:lst=q;}
+		else{
+			int nq=++cnt;cur?0:lst=nq;
+			memcpy(trans[nq],trans[q],sizeof(trans[q]));
+			mxlen[nq]=mxlen[p]+1;link[nq]=link[q];
+			for(;p&amp;&amp;trans[p][c]==q;p=link[p])trans[p][c]=nq;
+			link[q]=nq;if(cur)link[cur]=nq;
+		}
+	}
+}
+void bfs(int x){
+    q[l=r=1]=x;f[x]=0;
+    while(l&lt;=r){
+        int x=q[l++];
+        lst=p[f[x]];extend(a[x]);p[x]=lst;
+        for(int i=head[x],y;i;i=nxt[i])if((y=ver[i])^f[x])f[y]=x,q[++r]=y;
+    }
+}
+int main(){
+	scanf(&quot;%d%d&quot;,&amp;n,&amp;c);p[0]=1;
+	for(int i=1;i&lt;=n;i++)a[i]=read();
+	for(int i=1,x,y;i&lt;n;i++)x=read(),y=read(),add(x,y),add(y,x);
+	for(int i=1;i&lt;=n;i++)if(d[i]==1)bfs(i);
+	for(int i=2;i&lt;=cnt;i++)ans+=mxlen[i]-mxlen[link[i]];
+	printf(&quot;%lld\n&quot;,ans);
+	return 0;
+}
+</code></pre>
+<p>完结撒花!</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://prutekoi.github.io/post/burnside-yin-li-he-polya-ding-li">
+                  <h3 class="post-title">
+                    burnside引理和Polya定理
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '7d25e626199673e220e3',
+        clientSecret: '18275839c46c0e4e748c553c6a30d28aca3f634a',
+        repo: 'Prutekoi.github.io',
+        owner: 'Prutekoi',
+        admin: ['Prutekoi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
