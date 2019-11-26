@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-11-25T09:28:05.020Z</updated>
+    <updated>2019-11-26T02:39:51.516Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -57,7 +57,7 @@ int main(){
         <link href="https://prutekoi.github.io/post/guang-yi-sam">
         </link>
         <updated>2019-11-25T00:30:32.000Z</updated>
-        <content type="html"><![CDATA[<p>广义SAM用来处理多个字符串的子串的问题。一般是先建trie,再在trie上建SAM。<br>
+        <content type="html"><![CDATA[<p>广义SAM用来处理多个字符串的子串的问题。一般是先建trie,再在trie上建SAM。也可以不建trie直接每次插一个串,每次需要把lst设为S。<br>
 复杂度是O(trie树节点数)的。所以一般复杂度和加特殊字符拼接好像没什么区别。<br>
 不过如果trie树是题目给你的那就可以放心用了。</p>
 <p>在trie上建SAM的方法是插入p节点时先把lst置为父亲所在状态,<s>好像挺简单的</s>。若插入字符时当前节点已有这个出边,要像q一样判一下mxlen,具体看代码。</p>
@@ -132,7 +132,18 @@ int main(){
 	return 0;
 }
 </code></pre>
-<p>完结撒花!</p>
+<p><s>完结撒花!</s><br>
+下面还有一些要记录的性质:</p>
+<ul>
+<li>一个串的所有子串在广义后缀自动机中所在的状态量仍然是O(len)级别的,可以通过打标记暴力跳父亲的方式不重不漏地访问到。看一眼代码:</li>
+</ul>
+<pre><code class="language-c++">for(int i=1;i&lt;=n;i++)for(int j=1,p=1;j&lt;=len[i];j++){
+    p=trans[p][s[i][j]-'a'];
+    for(int l=p;l;l=par[l])
+        if(flag[l]^i)flag[l]=i,v[i].push_back(l);
+        else break;
+}
+</code></pre>
 ]]></content>
     </entry>
     <entry>
