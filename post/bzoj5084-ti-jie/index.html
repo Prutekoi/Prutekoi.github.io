@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>latex大全 | Prutekoi&#39;s blog</title>
+<title>BZOJ5084题解 | Prutekoi&#39;s blog</title>
 <meta name="description" content="">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -107,22 +107,77 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">latex大全</h2>
-            <div class="post-date">2019-11-19</div>
+            <h2 class="post-title">BZOJ5084题解</h2>
+            <div class="post-date">2019-11-26</div>
             
             <div class="post-content">
-              <p>我<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>太菜了,于是在这里粘一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>公式大全的链接供以后查阅qwq<br>
-有用的基本都在后面。<br>
-<a href="https://www.luogu.org/blog/IowaBattleship/latex-gong-shi-tai-quan">https://www.luogu.org/blog/IowaBattleship/latex-gong-shi-tai-quan</a></p>
+              <p>看到这道题我的做法踩了大多数人,我就来写个题解。<br>
+题意:</p>
+<blockquote>
+<p>维护一个串,初始为空,支持往末尾插字符删字符,每次操作后询问本质不同的子串个数。</p>
+</blockquote>
+<p>这道题如果只支持插入操作的话就是[SDOI2016]生成魔咒。<br>
+而删除字符相当于撤回了一次操作,看到这种支持撤回操作的问题很容易想到操作树。而我们把这棵操作树建出来以后它其实就是trie。那么我们在trie上遍历维护后缀自动机,就变成生成魔咒这道题了,进子树时插入字符,出子树时撤销影响,复杂度是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>的。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define LL long long
+using namespace std;
+const int N=2e5+50;
+int n,ch[N][26],tot,f[N],trans[N][26],par[N],mxlen[N],cnt=1,lst=1,tp;char s[N];LL anss,ans[N];
+vector&lt;int&gt;v[N];
+struct node{int x,tr,pa;}st[N*5];
+void extend(int c){
+    int cur=++cnt,p=lst;mxlen[cur]=mxlen[p]+1;
+    for(;p&amp;&amp;!trans[p][c];p=par[p])trans[p][c]=cur,st[++tp]=(node){p,0,par[p]};
+    if(!p)par[cur]=1;
+    else{
+        int q=trans[p][c];
+        if(mxlen[q]==mxlen[p]+1)par[cur]=q;
+        else{
+            int nq=++cnt;
+            memcpy(trans[nq],trans[q],sizeof(trans[q]));
+            mxlen[nq]=mxlen[p]+1;par[nq]=par[q];
+            for(;p&amp;&amp;trans[p][c]==q;p=par[p])trans[p][c]=nq,st[++tp]=(node){p,q,par[p]};
+            st[++tp]=(node){q,trans[q][c],par[q]};par[cur]=par[q]=nq;
+        }
+    }
+    lst=cur;
+}
+void dfs(int x){
+    for(int i=0;i&lt;v[x].size();i++)ans[v[x][i]]=anss;
+    for(int i=0;i&lt;26;i++)if(ch[x][i]){
+        int dat=cnt,tt=tp,ll=lst;LL aa=anss;
+        extend(i);anss+=mxlen[lst]-mxlen[par[lst]];dfs(ch[x][i]);
+        anss=aa;lst=ll;
+        while(cnt&gt;dat)memset(trans[cnt],0,sizeof(trans[cnt])),cnt--;
+        while(tp&gt;tt)trans[st[tp].x][i]=st[tp].tr,par[st[tp].x]=st[tp].pa,tp--;
+    }
+}
+int main(){
+    scanf(&quot;%s&quot;,s+1);n=strlen(s+1);
+    for(int i=1,p=0;i&lt;=n;i++){
+        if(s[i]=='-')p=f[p];
+        else{
+            int c=s[i]-'a';
+            if(!ch[p][c])f[ch[p][c]=++tot]=p;
+            p=ch[p][c];
+        }
+        v[p].push_back(i);
+    }
+    dfs(0);
+    for(int i=1;i&lt;=n;i++)printf(&quot;%lld\n&quot;,ans[i]);
+    return 0;
+}
+</code></pre>
+<p>网上的题解好像全都是广义SAM+set,我也搞不懂233</p>
 
             </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://prutekoi.github.io/post/duo-xiang-shi-suan-fa-xue-xi-bi-ji">
+                <a href="https://prutekoi.github.io/post/qia-zi-ran-yi-chu-ha-xi">
                   <h3 class="post-title">
-                    多项式算法学习笔记
+                    卡自然溢出哈希
                   </h3>
                 </a>
               </div>
