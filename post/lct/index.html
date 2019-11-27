@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>关于 | Prutekoi&#39;s blog</title>
+<title>LCT | Prutekoi&#39;s blog</title>
 <meta name="description" content="">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -107,20 +107,41 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">关于</h2>
-            <div class="post-date">2019-01-25</div>
+            <h2 class="post-title">LCT</h2>
+            <div class="post-date">2019-11-27</div>
             
             <div class="post-content">
-              <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+              <p>LCT真的短..</p>
+<h3 id="lct查子树">LCT查子树</h3>
+<p>我们知道一般的LCT只能对链进行操作,支持加边删边,链加链求和之类的。<br>
+那么如果需要动态加边然后查子树和呢?<br>
+首先,普通的LCT不能查询子树是因为它只维护了实链(即每棵splay)的信息,而轻链没有维护。那么我们在普通的splay基础上多维护一个轻链就好了。<br>
+如果我们有这么一个数组<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>i</mi><mo>[</mo><mi>x</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">si[x]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mopen">[</span><span class="mord mathdefault">x</span><span class="mclose">]</span></span></span></span>表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>的所有虚儿子的子树和的和,那么我们只需要简单修改一下update函数就好了。<br>
+而我们发现影响虚儿子的操作只有access和link,其中access是更换了实儿子,link是新增了虚儿子。注意维护一下就好了。实际代码只多了3句话...</p>
+<pre><code class="language-c++">void update(int x){s[x]=s[lc]+s[rc]+si[x]+val[x];}
+void access(int x){
+    int y=x,tp=0;st[++tp]=y;
+    while(y)st[++tp]=y=f[y];
+    while(tp)pushdown(st[tp--]);
+    for(;x;x=f[y=x])splay(x),si[x]+=s[rc]-s[y],rc=y;
+}
+void link(int x,int y){
+    split(x,y);f[x]=y;si[y]+=s[x];
+}
+</code></pre>
+<p>还有一个要特别注意的地方。子树和其实是所有的虚儿子的和加上自己再加上右儿子的子树和。于是查询子树和时要让这个点没有左儿子。可以通过makeroot等操作实现。</p>
 
             </div>
             
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://prutekoi.github.io/post/bzoj5084-ti-jie">
+                  <h3 class="post-title">
+                    BZOJ5084题解
+                  </h3>
+                </a>
+              </div>
             
 
             
