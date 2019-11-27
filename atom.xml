@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-11-27T04:01:11.310Z</updated>
+    <updated>2019-11-27T04:02:43.794Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -33,7 +33,8 @@ void link(int x,int y){
     split(x,y);f[x]=y;si[y]+=s[x];
 }
 </code></pre>
-<p>还有一个要特别注意的地方。子树和其实是所有的虚儿子的和加上自己再加上右儿子的子树和。于是查询子树和时要让这个点没有左儿子。可以通过makeroot等操作实现。</p>
+<p>还有一个要特别注意的地方。子树和其实是所有的虚儿子的和加上自己再加上右儿子的子树和。于是要查询子树和时要让这个点没有左儿子。可以通过makeroot等操作实现。<br>
+LCT虽然可以查子树但是无法优美地修改子树。那就是toptree的事了..咕咕咕</p>
 ]]></content>
     </entry>
     <entry>
