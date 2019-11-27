@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-11-26T13:58:38.482Z</updated>
+    <updated>2019-11-27T02:32:34.136Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -201,7 +201,7 @@ int main(){
 <p><s>完结撒花!</s><br>
 下面还有一些要记录的性质:</p>
 <ul>
-<li>一个串的所有子串在广义后缀自动机中所在的状态量仍然是O(len)级别的,可以通过打标记暴力跳父亲的方式不重不漏地访问到。看一眼代码:</li>
+<li><s>一个串的所有子串在广义后缀自动机中所在的状态量仍然是O(len)级别的</s>(ztb说可以卡,hack咕咕咕),可以通过打标记暴力跳父亲的方式不重不漏地访问到。看一眼代码:</li>
 </ul>
 <pre><code class="language-c++">for(int i=1;i&lt;=n;i++)for(int j=1,p=1;j&lt;=len[i];j++){
     p=trans[p][s[i][j]-'a'];
