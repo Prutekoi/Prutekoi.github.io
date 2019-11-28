@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-11-28T13:39:02.764Z</updated>
+    <updated>2019-11-28T13:47:17.492Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -75,7 +75,8 @@ int main(){
     for(int i=1,k,x,y;i&lt;=q;i++){
         k=in();x=in();y=in();
         if(k){
-            int z=lca(x,y);if(d[x]+d[y]-2*d[z]+1&lt;k){puts(&quot;invalid request!&quot;);continue;}
+            int z=lca(x,y);
+            if(d[x]+d[y]-2*d[z]+1&lt;k){puts(&quot;invalid request!&quot;);continue;}
             A.init(dfn[x]);B.init(dfn[y]);C.init(dfn[z]);D.init(dfn[f[z][0]]);
             printf(&quot;%d\n&quot;,query(1,K,k));
         }
