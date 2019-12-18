@@ -2,13 +2,74 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-12-17T08:38:05.297Z</updated>
+    <updated>2019-12-18T09:12:31.654Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
     <logo>https://prutekoi.github.io/images/avatar.png</logo>
     <icon>https://prutekoi.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Prutekoi&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[强竞有哈回]]></title>
+        <id>https://prutekoi.github.io/post/qiang-jing-you-ha-hui</id>
+        <link href="https://prutekoi.github.io/post/qiang-jing-you-ha-hui">
+        </link>
+        <updated>2019-12-18T09:11:19.000Z</updated>
+        <content type="html"><![CDATA[<p>在纪中集训课件里面看见的这句话qwq,当时没会于是考试就遭报应了qwq赶紧学一学..</p>
+<p>定义:</p>
+<blockquote>
+<p>有向完全图称为竞赛图。<br>
+不重不漏地经过图上所有点的路径叫做哈密顿通路。<br>
+最后回到起点的哈密顿通路叫做哈密顿回路。</p>
+</blockquote>
+<p>一些结论:</p>
+<blockquote>
+<p>竞赛图一定有哈密顿通路。<br>
+强连通竞赛图一定有哈密顿回路。</p>
+</blockquote>
+<p>这两条结论都可以用数学归纳法证明,而且可以基于数学归纳的思路给出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>的构造。</p>
+<p>第一条结论比较简单,我们直接上代码注释就好了。</p>
+<pre><code class="language-c++">l=r=1;//我们一个个往里插点,维护l到r用nxt连起来的一条路径。
+for(int i=2;i&lt;=n;p++){
+    if(a[i][l])nxt[i]=l,l=i;
+    else if(a[r][i])nxt[r]=i,r=i;//这两个情况十分显然。
+    else{
+        for(int j=l;;j=nxt[j])
+            if(a[j][i]&amp;&amp;a[i][nxt[j]]){//此时我们已知l-&gt;i,i-&gt;r,则在链中一定会有一个点满足此条件。在此插入即可
+                nxt[i]=nxt[j],nxt[j]=i;
+                break;
+            }
+    }
+}
+</code></pre>
+<p>对于强连通的竞赛图,我们想要构造出它的一条哈密顿回路。首先我们求出一条哈密顿通路l-&gt;r。然后在l-&gt;r这条链上遍历找到第一个到l有连边的点p(一定会找到,否则不强连通...)。此时我们已经有了一个环,考虑对后面的点都插入环。具体见代码吧233</p>
+<pre><code class="language-c++">//这个部分最好画图理解,图是一个环长一条尾巴的样子。
+r=0;//这里是紧接着上面找完通路。先把r置为0表示还没有找到初始的环。
+for(int i=l;i;i=nxt[i])//r是环上最靠近链的点,r-&gt;l是环上的边,r-&gt;nxt[r]是链上的边。
+	if(r){//尝试在环中插入点i
+		for(int j=l,k=r;;k=j,j=nxt[j]){
+			if(a[i][j]){//在环上找到一个可以作为nxt[i]的点。
+				nxt[k]=nxt[r];j作为了i的后继,那么本来j的前驱k就要另找一个后继了。
+				if(k!=r)nxt[r]=l;//本来没有连上的环上的边要连上(k=r的话r的后继在上一句话已经改了,不是l了)
+				l=j,r=i;break;//根据l和r的定义修改l和r
+			}
+			if(j==r)break;
+		}
+	}
+	else if(a[i][l])r=i;//这里找到了初始的环
+nxt[r]=l;//这里把最后一条边连上。
+</code></pre>
+<p>我的注释真的有够清楚了qwq肯定能看懂的qwq<br>
+这两条性质对于竞赛图上的问题非常有帮助</p>
+<p>竞赛图上最长路问题<a href="https://www.lydsy.com/JudgeOnline/problem.php?id=4727">BZOJ4727</a>:对于竞赛图上每个点i求出一条从i出发的最长简单路径。</p>
+<p>解决这个问题还有一个比较显然的结论:</p>
+<blockquote>
+<p>竞赛图对强连通分量缩点后是一条链。</p>
+</blockquote>
+<p>证明的话考虑竞赛图两两点之间都有关系,于是拓扑序只有一种(比较感性,其实也可以数学归纳)</p>
+<p>这个先缩点,那么对于一个强连通分量里的点都能到达,分量之间的点又是两两都有边,那么显然可以得到就是从点i所在分量走完缩完后的链,分量中走一个哈密顿回路即可。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[二阶常系数递推关系求解方法]]></title>
         <id>https://prutekoi.github.io/post/er-jie-chang-xi-shu-di-tui-guan-xi-qiu-jie-fang-fa</id>
@@ -824,36 +885,6 @@ int main(){
 -221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
 s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
 s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23972em;"><span></span></span></span></span></span><span class="mclose">)</span></span></span></span>的qwq</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[burnside引理和Polya定理]]></title>
-        <id>https://prutekoi.github.io/post/burnside-yin-li-he-polya-ding-li</id>
-        <link href="https://prutekoi.github.io/post/burnside-yin-li-he-polya-ding-li">
-        </link>
-        <updated>2019-11-24T10:10:54.000Z</updated>
-        <content type="html"><![CDATA[<p>burnside引理和Polya定理用于解决一些染色本质不同状态的计数问题。<br>
-例题:</p>
-<blockquote>
-<p>给定一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个点，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>条边的环，有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>种颜色，给每个顶点染色，问有多少种本质不同的染色方案,本质不同定义为：只需要不能通过旋转与别的染色方案相同。</p>
-</blockquote>
-<p>我们发现这个本质不同可以有一个更数学一点的定义,即:</p>
-<blockquote>
-<p>有一些置换,若一个状态可以通过其中一个置换到达另一个状态,则这两个状态本质相同。</p>
-</blockquote>
-<p>burnside引理:</p>
-<blockquote>
-<p>对于一个置换<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span>,若一个染色方案<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span>经过置换后不变，称<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span>为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span>的不动点。将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span>的不动点数目记为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>f</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C(f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span></span></span></span>，则可以证明等价类数目为所有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>f</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C(f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span></span></span></span>的平均值。</p>
-</blockquote>
-<p>那么对于这道题来说,有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个置换,分别对应着顺时针转<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>−</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">1-n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个。只需要枚举所有的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个置换,再枚举<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">n^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span></span></span>种状态,计算<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>f</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C(f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span></span></span></span>,套用公式即可。<br>
-...<br>
-太不优秀啦!!<br>
-于是我们有了Polya定理:</p>
-<blockquote>
-<p>对于一个置换<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span>,若他可以拆成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个简单环,且颜色数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span>,则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>f</mi><mo>)</mo><mo>=</mo><msup><mi>m</mi><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">C(f)=m^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.849108em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">m</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span>。</p>
-</blockquote>
-<p>这个也很好理解。对于置换f的每个环,环内部的颜色都要是相同的,才能成为不动点。于是乘法原理一下就好啦。</p>
-<p>于是上面那道例题,可以证明旋转<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>次的置换环的个数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi><mi>c</mi><mi>d</mi><mo>(</mo><mi>k</mi><mo separator="true">,</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">gcd(k,n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>,他就成为一道很水的莫反题啦,完结撒花!</p>
 ]]></content>
     </entry>
 </feed>
