@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2019-12-26T12:16:03.120Z</updated>
+    <updated>2019-12-26T12:25:29.323Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -19,7 +19,10 @@
 也不能一直在浏览器上挂着吧<br>
 于是在这里记录一下，<s>希望有生之年能补吧</s></p>
 <ul>
-<li>12.26 BZOJ4772. 显而易见的数论</li>
+<li>BZOJ4772. 显而易见的数论</li>
+<li>BZOJ3557: [Ctsc2014]随机数<a href="http://picks.logdown.com/posts/197310-solution-to-ctsc2014-random">题解</a></li>
+<li>12.20，12.21模拟赛</li>
+<li>12.26模拟赛T3(貌似是线代神题)</li>
 </ul>
 ]]></content>
     </entry>
