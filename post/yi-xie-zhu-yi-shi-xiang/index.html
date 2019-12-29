@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1577362811100">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1577613799940">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1577362811100" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1577613799940" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -138,6 +138,9 @@
 <li>ISAP时是从Tbfs求距离,一定要记得自己的边是反的,比如要判edge[i^1]!=0</li>
 <li>当直接推导很不可做时可以考虑每个元素的贡献。</li>
 <li>当推导出来的函数需要它是一个积性函数时，它多半就是一个积性函数，我们可以通过打表来验证。</li>
+<li>重载方括号会导致常数巨大。。若非必须(棋盘开不下二维数组)不要重载</li>
+<li>数据结构问题，发现只用支持取出区间里的点，那么其实只用set就好了。。。于是noi2019d2t1就被set套set水过。。</li>
+<li>线段树中懒标记无法合并的话会导致直接标记下放的复杂度不对，这时往往可以考虑标记永久化。</li>
 </ul>
 
             </div>
