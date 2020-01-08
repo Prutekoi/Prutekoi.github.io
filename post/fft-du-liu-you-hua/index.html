@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>FFT毒瘤优化 | Prutekoi&#39;s blog</title>
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1578441818440">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153103856-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-153103856-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://prutekoi.github.io">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1578441818440" class="site-logo">
+        <h1 class="site-title">Prutekoi&#39;s blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://prutekoi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">FFT毒瘤优化</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p>myy的论文中的毒瘤优化。。多项式乘法可以做到2次或1.5次FFT。。<br>
+若要做 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span></span></span></span> 与 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span> 卷积<br>
+构造<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>=</mo><mi>A</mi><mo>+</mo><mi>B</mi><mi>i</mi></mrow><annotation encoding="application/x-tex">P=A+Bi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span></span></span></span><br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Q</mi><mo>=</mo><mi>A</mi><mo>−</mo><mi>B</mi><mi>i</mi></mrow><annotation encoding="application/x-tex">Q=A-Bi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">Q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault">i</span></span></span></span><br>
+推推式子发现 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Q</mi><mo>(</mo><msup><mi>ω</mi><mi>k</mi></msup><mo>)</mo><mo>=</mo><mi>P</mi><mo>(</mo><msup><mi>ω</mi><mrow><mi>l</mi><mi>e</mi><mi>n</mi><mo>−</mo><mi>k</mi></mrow></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">Q(\omega^k)=P(\omega^{len-k})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.099108em;vertical-align:-0.25em;"></span><span class="mord mathdefault">Q</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.0991079999999998em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>的共轭复数。于是只要把 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span> 点值求出，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Q</mi></mrow><annotation encoding="application/x-tex">Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">Q</span></span></span></span> 点值就可以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> 求出，从而解出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span> 的点值。于是做到了两次FFT。一次半那个。。咕了，没用啊，而且这个两次的肯定也没用啊。。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=3e6+50;
+const double pi=acos(-1);
+int n,m,a[N],b[N],lim=1,l=-1,r[N];
+struct cp{
+    double x,y;
+    cp operator +(const cp &amp;b){return (cp){x+b.x,y+b.y};}
+    cp operator -(const cp &amp;b){return (cp){x-b.x,y-b.y};}
+    cp operator *(const cp &amp;b){return (cp){x*b.x-y*b.y,x*b.y+y*b.x};}
+    cp operator ~(){return (cp){x,-y};}
+}P[N],Q[N],A[N],B[N],rt[N],irt[N];
+int read(){
+    int x=0,c;
+    while(!isdigit(c=getchar()));
+    while(isdigit(c))x=x*10+c-48,c=getchar();
+    return x;
+}
+void init(int n){
+    while(lim&lt;n)lim&lt;&lt;=1,l++;
+    for(int i=0;i&lt;lim;i++)r[i]=r[i&gt;&gt;1]&gt;&gt;1^(i&amp;1)&lt;&lt;l;
+    rt[lim&gt;&gt;1]=(cp){1,0};cp w=(cp){cos(2*pi/lim),sin(2*pi/lim)};
+    for(int i=(lim&gt;&gt;1)+1;i&lt;lim;i++)rt[i]=rt[i-1]*w;
+    for(int i=(lim&gt;&gt;1)-1;i;i--)rt[i]=rt[i&lt;&lt;1];
+    for(int i=1;i&lt;lim;i++)irt[i]=~rt[i];
+}
+void FFT(cp *a,cp *w){
+    for(int i=0;i&lt;lim;i++)if(i&lt;r[i])swap(a[i],a[r[i]]);
+    for(int i=1;i&lt;lim;i&lt;&lt;=1)
+        for(int t=i&lt;&lt;1,j=0;j&lt;lim;j+=t)
+            for(int k=0;k&lt;i;k++){
+                cp x=a[j+k],y=a[i+j+k]*w[i|k];
+                a[j+k]=x+y;a[i+j+k]=x-y;
+            }
+}
+int main(){
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);init(n+m+1);
+    for(int i=0;i&lt;=n;i++)P[i].x=read();
+    for(int i=0;i&lt;=m;i++)P[i].y=read();
+    FFT(P,rt);Q[0]=~P[0];
+    for(int i=1;i&lt;lim;i++)Q[i]=~P[lim-i];
+    for(int i=0;i&lt;lim;i++)A[i]=(P[i]+Q[i])*(cp){1.0/2,0},B[i]=(P[i]-Q[i])*(cp){0,-1.0/2};
+    for(int i=0;i&lt;lim;i++)A[i]=A[i]*B[i];
+    FFT(A,irt);
+    for(int i=0;i&lt;=n+m;i++)printf(&quot;%d &quot;,(int)(A[i].x/lim+0.5));
+    return 0;
+}
+</code></pre>
+<h3 id="任意模数ntt">任意模数NTT</h3>
+<p>三模数NTT没有写，直接上拆系数FFT吧。<br>
+我们知道卷积出的值大小是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msup><mn>0</mn><mn>23</mn></msup></mrow><annotation encoding="application/x-tex">10^{23}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span> 级别，直接FFT精度不够。那么考虑把每个数表示成 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>∗</mo><mi>M</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a*M+b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi><mo>=</mo><msup><mn>2</mn><mn>15</mn></msup></mrow><annotation encoding="application/x-tex">M=2^{15}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span></span>。<br>
+这样我们做4个卷积，每个卷积的精度都够了。如果加上上面提到的FFT次数优化，可以做到只用4次FFT。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define ld double
+using namespace std;
+const int N=4e5+50,M=32768;
+const ld pi=acos(-1.0);
+int n,m,p,r[N],lim=1,l=-1,ans[N];
+struct cp{
+    ld x,y;
+    cp operator +(const cp &amp;b){return (cp){x+b.x,y+b.y};}
+    cp operator -(const cp &amp;b){return (cp){x-b.x,y-b.y};}
+    cp operator *(const cp &amp;b){return (cp){x*b.x-y*b.y,x*b.y+y*b.x};}
+    cp operator ~(){return (cp){x,-y};}
+}P[N],Q[N],I,rt[N],irt[N],a0[N],a1[N],b0[N],b1[N];
+void init(int n){
+    while(lim&lt;n)lim&lt;&lt;=1,l++;
+    for(int i=1;i&lt;lim;i++)r[i]=r[i&gt;&gt;1]&gt;&gt;1^(i&amp;1)&lt;&lt;l;
+    rt[1]=(cp){1,0};
+    for(int i=2;i&lt;lim;i&lt;&lt;=1)for(int j=0;j&lt;i;j++)
+        rt[i|j]=j&amp;1?(cp){cos(j*pi/i),sin(j*pi/i)}:rt[(i|j)&gt;&gt;1];
+    for(int i=1;i&lt;lim;i++)irt[i]=~rt[i];
+}
+void FFT(cp *a,int op){
+    for(int i=0;i&lt;lim;i++)if(i&lt;r[i])swap(a[i],a[r[i]]);
+    for(int i=1;i&lt;lim;i&lt;&lt;=1)
+        for(int t=i&lt;&lt;1,j=0;j&lt;lim;j+=t)
+            for(int k=0;k&lt;i;k++){
+                cp x=a[j+k],y=a[i+j+k]*(op&gt;0?rt[i+k]:irt[i+k]);
+                a[j+k]=x+y;a[i+j+k]=x-y;
+            }
+    if(op&lt;0)for(int i=0;i&lt;lim;i++)a[i]=a[i]*(cp){1.0l/lim,0};
+}
+void DFT(cp *a,cp *b){
+    for(int i=0;i&lt;lim;i++)P[i]=a[i]+b[i]*I;
+    FFT(P,1);for(int i=0;i&lt;lim;i++)Q[i]=~P[i?lim-i:0];
+    for(int i=0;i&lt;lim;i++){
+        cp p=P[i],q=Q[i];
+        a[i]=(p+q)*(cp){0.5,0},
+        b[i]=(q-p)*(cp){0,0.5};
+    }
+}
+int get(ld x){return x&gt;0?(long long)(x+0.5)%p:(long long)(x-0.5)%p;}
+int main(){
+    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;p);init(n+m+1);I=(cp){0,1};
+    for(int i=0,x;i&lt;=n;i++)scanf(&quot;%d&quot;,&amp;x),a0[i].x=x&gt;&gt;15,a1[i].x=x&amp;32767;
+    for(int i=0,x;i&lt;=m;i++)scanf(&quot;%d&quot;,&amp;x),b0[i].x=x&gt;&gt;15,b1[i].x=x&amp;32767;
+    DFT(a0,a1);DFT(b0,b1);
+    for(int i=0;i&lt;lim;i++)P[i]=a0[i]*b0[i],Q[i]=a0[i]*b1[i]+a1[i]*b0[i]+a1[i]*b1[i]*I;
+    FFT(P,-1);FFT(Q,-1);
+    for(int i=0;i&lt;=n+m;i++)
+        printf(&quot;%d &quot;,((1ll*M*M*get(P[i].x)%p+1ll*M*get(Q[i].x)%p+get(Q[i].y))%p+p)%p);
+    return 0;
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://prutekoi.github.io/post/zhi-pei-shu">
+                  <h3 class="post-title">
+                    支配树
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '7d25e626199673e220e3',
+        clientSecret: '18275839c46c0e4e748c553c6a30d28aca3f634a',
+        repo: 'Prutekoi.github.io',
+        owner: 'Prutekoi',
+        admin: ['Prutekoi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

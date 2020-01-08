@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1577613799940">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1578441818440">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1577613799940" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1578441818440" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -141,6 +141,10 @@
 <li>重载方括号会导致常数巨大。。若非必须(棋盘开不下二维数组)不要重载</li>
 <li>数据结构问题，发现只用支持取出区间里的点，那么其实只用set就好了。。。于是noi2019d2t1就被set套set水过。。</li>
 <li>线段树中懒标记无法合并的话会导致直接标记下放的复杂度不对，这时往往可以考虑标记永久化。</li>
+<li>多项式乘法通过取ln变成加法。</li>
+<li>小数输出位数要尽量多。。样例是坑人的。。</li>
+<li>节点编号从0开始时要注意对数组初始是0的影响</li>
+<li>设置的inf经过题目的+-之后可能会溢出。这时可以考虑fix（当一个值比inf还要大时重新设为inf）</li>
 </ul>
 
             </div>

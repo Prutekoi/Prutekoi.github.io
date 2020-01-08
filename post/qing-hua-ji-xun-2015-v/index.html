@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>【清华集训2015】V | Prutekoi&#39;s blog</title>
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1578441818440">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153103856-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-153103856-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://prutekoi.github.io">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1578441818440" class="site-logo">
+        <h1 class="site-title">Prutekoi&#39;s blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://prutekoi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">【清华集训2015】V</h2>
+            <div class="post-date">2020-01-04</div>
+            
+            <div class="post-content">
+              <p>这个题有点意思。<br>
+<img src="https://prutekoi.github.io/post-images/1578139985345.png" alt="" loading="lazy"></p>
+<p>注意到这个题目是区间修改单点查询。<br>
+如果对序列建线段树的话，意味着不需处理信息的合并，只要把tag处理好就可。<br>
+还有一个常用的套路就是扫描线。</p>
+<p>讲两种做法。</p>
+<h3 id="做法一">做法一</h3>
+<p>我们先往正常的线段树方向想。</p>
+<p>首先把操作统一一下，操作2可以看作变成 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><msub><mi>A</mi><mi>i</mi></msub><mo>+</mo><mi>x</mi><mo separator="true">,</mo><mo>−</mo><mi>i</mi><mi>n</mi><mi>f</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">max(A_i+x,-inf)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">−</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span></span></span></span>，操作3可以看作变成 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><msub><mi>A</mi><mi>i</mi></msub><mo>−</mo><mi>i</mi><mi>n</mi><mi>f</mi><mo separator="true">,</mo><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">max(A_i-inf,x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。于是我们把操作都变成了操作1。</p>
+<p>如果我们对每个操作看作一个映射的话，那么它的图象是一段常函数接一段斜率为1的一次函数的形状。（因为有+和取max）。容易知道这样形状的映射是可以复合的，复合后还是这样的形状。于是我们可以考虑维护这样的映射。我们把tag做成这样的函数，处理一下tag的合并（映射的复合），就可以解决单点询问值的操作。（把标记放到底再拿初始值映射一下）</p>
+<p>而它还有一个询问单点历史最大值的操作。容易想到我们也可以对最大值维护一个映射。还是要解决合并的问题，两个映射合并时考虑最大值可能在第二个映射之前取到，也可能在第二个映射之后取到。那么就是两个图象取上方的部分，仍是这样的形状，故是可合并的。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define LL long long
+using namespace std;
+const int N=5e5+50;
+const LL inf=1e16;
+int n,m,a[N];bool fl[N*4];
+int read(){
+    int x=0,c;
+    while(!isdigit(c=getchar()));
+    while(isdigit(c))x=x*10+c-48,c=getchar();
+    return x;
+}
+struct Laz{
+    LL x,y;//对于一个映射记录它顶点（拐角）的坐标
+    LL calc(LL a)const{return a&lt;=x?y:y+a-x;}
+    void fix(){if(x&lt;-inf)y+=-inf-x,x=-inf;if(x&gt;inf)x=inf;}
+    Laz operator +(const Laz &amp;b){//这个是映射的复合
+        if(y&gt;=b.x)return (Laz){x,b.calc(y)};
+        else return(Laz){b.x-y+x,b.y};
+    }
+    Laz operator *(const Laz &amp;b){//这个是两个映射取上方
+        Laz c=*this,d=b;
+        if(c.y&lt;d.y)swap(c,d);
+        if(d.calc(c.x)&lt;=c.y)return c;
+        else return (Laz){d.x+c.y-d.y,c.y};
+    }
+}laz[N*4],mx[N*4];
+void build(int x,int l,int r){
+    if(l==r){laz[x]=mx[x]=(Laz){-inf,-inf};fl[x]=1;return;}
+    int mid=(l+r)&gt;&gt;1;
+    build(x&lt;&lt;1,l,mid);
+    build(x&lt;&lt;1|1,mid+1,r);
+}
+void change(int x,int l,int r,int ql,int qr,Laz d,Laz m){
+    if(l&gt;=ql&amp;&amp;r&lt;=qr){
+        if(fl[x])mx[x]=mx[x]*(laz[x]+m),laz[x]=laz[x]+d;
+        else mx[x]=m,laz[x]=d;
+        mx[x].fix();laz[x].fix();
+        fl[x]=1;return;
+    }
+    int mid=(l+r)&gt;&gt;1;
+    if(fl[x]){
+        change(x&lt;&lt;1,l,mid,1,n,laz[x],mx[x]);
+        change(x&lt;&lt;1|1,mid+1,r,1,n,laz[x],mx[x]);
+        fl[x]=0;
+    }
+    if(ql&lt;=mid)change(x&lt;&lt;1,l,mid,ql,qr,d,m);
+    if(qr&gt;mid)change(x&lt;&lt;1|1,mid+1,r,ql,qr,d,m);
+}
+LL query(int x,int l,int r,int p,int op){
+    if(l==r)return (op?mx[x]:laz[x]).calc(a[l]);
+    int mid=(l+r)&gt;&gt;1;
+    if(fl[x]){
+        change(x&lt;&lt;1,l,mid,1,n,laz[x],mx[x]);
+        change(x&lt;&lt;1|1,mid+1,r,1,n,laz[x],mx[x]);
+        fl[x]=0;
+    }
+    if(p&lt;=mid)return query(x&lt;&lt;1,l,mid,p,op);
+    return query(x&lt;&lt;1|1,mid+1,r,p,op);
+}
+int main(){
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    for(int i=1;i&lt;=n;i++)scanf(&quot;%d&quot;,&amp;a[i]);
+    build(1,1,n);
+    for(int i=1,op,l,r,x;i&lt;=m;i++){
+        op=read();
+        if(op&lt;=3)l=read(),r=read();
+        x=read();
+        if(op&lt;=3){
+            Laz d;
+            if(op==1)d=(Laz){-inf,x-inf};
+            else if(op==2)d=(Laz){x,0};
+            else d=(Laz){inf,x};
+            change(1,1,n,l,r,d,d);
+        }
+        else printf(&quot;%lld\n&quot;,query(1,1,n,x,op-4));
+    }
+    return 0;
+}
+</code></pre>
+<h3 id="做法二">做法二</h3>
+<p>还是考虑把操作统一一点。三操作可以看作-inf再+x。</p>
+<p>我们来考虑单独一个数时这些操作会对它产生什么影响。我们维护一个当前值，顺序扫这些操作，若当前值小于0则把它置成0。等等..这不是在求最大后缀和么？历史最大值就是我们每次都对当前值取个max。这不是在求最大子段和么？</p>
+<p>好。我们现在发现只要我们对于一个数有对他影响的完整的操作序列，我们就能通过线段树求一个前缀的最大子段和及最大后缀和来求解。但是我们有多个数啊。。没关系，看到一个操作只对一个区间的数有影响，这让我们想到了扫描线。于是这题就愉快地解决啦！</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define LL long long
+using namespace std;
+const int N=5e5+50;
+const long long inf=5.5e14;
+int read(){
+    int x=0,c;
+    while(!isdigit(c=getchar()));
+    while(isdigit(c))x=x*10+c-48,c=getchar();
+    return x;
+}
+int n,m,T,q,cnt[N];long long ans[N],a[N];
+struct node{long long x;int p,id;};
+vector&lt;node&gt;v[N],Q[N];
+LL fix(LL x){if(x&lt;-inf)return -inf;if(x&gt;inf)return inf;return x;}
+struct Mes{
+    LL sum,ml,mr,mm;
+    void fix(){sum=::fix(sum);ml=::fix(ml);mr=::fix(mr);mm=::fix(mm);}
+    Mes operator +(const Mes &amp;b){
+        Mes z;
+        z.sum=sum+b.sum;
+        z.ml=max(ml,sum+b.ml);
+        z.mr=max(b.mr,mr+b.sum);
+        z.mm=max(mr+b.ml,max(mm,b.mm));
+        z.fix();
+        return z;
+    }
+}t[N*4];
+void change(int x,int l,int r,int p,long long d){
+    if(l==r){
+        if(d==inf)cnt[l]++;
+        else if(d==-inf)cnt[l]--;
+        else a[l]+=d;
+        if(cnt[l]&gt;0)t[x].sum=inf;
+        else if(cnt[l]&lt;0)t[x].sum=-inf;
+        else t[x].sum=a[l];
+        t[x].ml=t[x].mr=t[x].mm=t[x].sum&gt;0?t[x].sum:0;
+        return;
+    }
+    int mid=(l+r)&gt;&gt;1;
+    if(p&lt;=mid)change(x&lt;&lt;1,l,mid,p,d);
+    else change(x&lt;&lt;1|1,mid+1,r,p,d);
+    t[x]=t[x&lt;&lt;1]+t[x&lt;&lt;1|1];
+}
+Mes query(int x,int l,int r,int qr){
+    if(r&lt;=qr)return t[x];
+    int mid=(l+r)&gt;&gt;1;
+    if(qr&lt;=mid)return query(x&lt;&lt;1,l,mid,qr);
+    return query(x&lt;&lt;1,l,mid,qr)+query(x&lt;&lt;1|1,mid+1,r,qr);
+}
+int main(){
+    n=read();m=read();T=1;
+    for(int i=1,x=0,y;i&lt;=n;i++)y=read(),v[i].push_back((node){y-x,1}),x=y;
+    for(int i=1,op,l,r,x;i&lt;=m;i++){
+        op=read();
+        if(op&lt;=3)l=read(),r=read();
+        x=read();
+        if(op==3)T++,v[l].push_back((node){-inf,T}),v[r+1].push_back((node){inf,T}),op=1;
+        if(op==1)T++,v[l].push_back((node){x,T}),v[r+1].push_back((node){-x,T});
+        else if(op==2)T++,v[l].push_back((node){-x,T}),v[r+1].push_back((node){x,T});
+        else if(op==4)Q[x].push_back((node){T,0,++q});
+        else Q[x].push_back((node){T,1,++q});
+    }
+    for(int i=1;i&lt;=n;i++){
+        for(int j=0;j&lt;v[i].size();j++)
+            change(1,1,T,v[i][j].p,v[i][j].x);
+        for(int j=0;j&lt;Q[i].size();j++){
+            Mes x=query(1,1,T,Q[i][j].x);
+            ans[Q[i][j].id]=Q[i][j].p?x.mm:x.mr;
+        }
+    }
+    for(int i=1;i&lt;=q;i++)printf(&quot;%lld\n&quot;,ans[i]);
+    return 0;
+}
+</code></pre>
+<p>值得一提的是这两个做法都有涉及inf。这个可坑了我一把呜呜呜。inf必须设成比涉及到的最大的数还大，在这题是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>∗</mo><mn>1</mn><msup><mn>0</mn><mn>14</mn></msup></mrow><annotation encoding="application/x-tex">5*10^{14}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span></span>。如果数据构造让 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>∗</mo><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">5*10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span> 个inf加起来，就会溢出qwq</p>
+<p>所以我们要杜绝这种情况。。详情看两个代码中的fix函数。</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://prutekoi.github.io/post/hall-ding-li">
+                  <h3 class="post-title">
+                    Hall 定理
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '7d25e626199673e220e3',
+        clientSecret: '18275839c46c0e4e748c553c6a30d28aca3f634a',
+        repo: 'Prutekoi.github.io',
+        owner: 'Prutekoi',
+        admin: ['Prutekoi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
