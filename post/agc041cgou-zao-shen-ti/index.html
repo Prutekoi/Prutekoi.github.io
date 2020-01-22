@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>AGC041C（构造神题） | Prutekoi&#39;s blog</title>
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1579692041932">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153103856-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-153103856-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://prutekoi.github.io">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1579692041932" class="site-logo">
+        <h1 class="site-title">Prutekoi&#39;s blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://prutekoi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">AGC041C（构造神题）</h2>
+            <div class="post-date">2020-01-14</div>
+            
+            <div class="post-content">
+              <p>tourist出的题就是不一样。。</p>
+<blockquote>
+<p>有无限个1x2的多米诺骨牌和n*n的棋盘。一个格子最多被覆盖一次。<br>
+一行或一列的“质量”定义为有多少骨牌覆盖到了它的至少一个格子。<br>
+求一个放至少一个骨牌的构造方案使得每一行和每一列的质量都相同。<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>≤</mo><mn>1000</mn></mrow><annotation encoding="application/x-tex">n\leq 1000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+</blockquote>
+<p>一看到构造题就是不知道往哪想qwq<br>
+先打一个爆搜找找规律好了！（相同数字是同一个骨牌）</p>
+<pre><code>{ 1, 2, 3, 3},
+{ 1, 2, 4, 4},
+{ 5, 5, 6, 7},
+{ 8, 8, 6, 7}
+
+{ 0, 0, 1, 2, 3},
+{ 0, 0, 1, 2, 3},
+{ 4, 4, 5, 6, 6},
+{ 7, 7, 5, 0, 8},
+{ 9, 9,10,10, 8}
+
+{ 0, 0, 0, 0, 1, 2, 3},
+{ 0, 0, 0, 0, 1, 2, 3},
+{ 0, 0, 0, 0, 4, 5, 6},
+{ 0, 0, 0, 0, 4, 5, 6},
+{ 7, 7, 8, 8, 0, 0, 9},
+{10,10,11,11, 0, 0, 9},
+{12,12,13,13,14,14, 0}
+</code></pre>
+<p>虽然确实看起来挺有规律的，但是发现这玩应确实不像是可以通过找规律构造的样子啊。。</p>
+<p>嗯？发现打出的表可能会有大片空白？？这个可以启发我们什么？<br>
+发现我们可以试着把两个合法的方案拼起来，一个放在左上角一个放在右下角，只要它们对应的每行每列的骨牌数是一样的，那么拼起来仍是一个合法方案。这个性质非常棒啊！于是我们可以用小的拼大的了。</p>
+<p>所以打出4,5,6,7的表之后用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mo>∗</mo><mi>k</mi><mo>+</mo><mi>q</mi><mo>(</mo><mn>4</mn><mo>≤</mo><mi>q</mi><mo>&lt;</mo><mn>8</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">4*k+q(4\leq q&lt;8)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7335400000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">8</span><span class="mclose">)</span></span></span></span> 表示n，然后拼一哈就好了</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=1010;
+int n,t,cnt[N];bool flag=0;char a[N][N];
+int b[4][10][10]={
+{
+{ 1, 2, 3, 3},
+
+{ 1, 2, 4, 4},
+
+{ 5, 5, 6, 7},
+
+{ 8, 8, 6, 7}
+},
+{
+{ 0, 0, 1, 2, 3},
+
+{ 0, 0, 1, 2, 3},
+
+{ 4, 4, 5, 6, 6},
+
+{ 7, 7, 5, 0, 8},
+
+{ 9, 9,10,10, 8}
+},
+{
+{ 0, 0, 0, 1, 2, 3},
+
+{ 0, 0, 0, 1, 2, 3},
+
+{ 4, 0, 5, 5, 0, 6},
+
+{ 4, 7, 7, 0, 0, 6},
+
+{ 8, 8, 9, 0,10,10},
+
+{11,11, 9,12,12, 0}
+},
+{
+{ 0, 0, 0, 0, 1, 2, 3},
+
+{ 0, 0, 0, 0, 1, 2, 3},
+
+{ 0, 0, 0, 0, 4, 5, 6},
+
+{ 0, 0, 0, 0, 4, 5, 6},
+
+{ 7, 7, 8, 8, 0, 0, 9},
+
+{10,10,11,11, 0, 0, 9},
+
+{12,12,13,13,14,14, 0}
+}
+};
+// void check(){
+//     if(!t)return;
+//     for(int i=0;i&lt;n;i++){
+//         int nn=0;
+//         for(int j=0;j&lt;n;j++)
+//             if(a[j][i]&amp;&amp;(!j||a[j][i]!=a[j-1][i]))nn++;
+//         if(nn!=cnt[0])return;
+//     }
+//     for(int i=0;i&lt;n;i++){
+//         putchar('{');
+//         for(int j=0;j&lt;n;j++){printf(&quot;%2d&quot;,a[i][j]);if(j&lt;n-1)putchar(',');}
+//         puts(&quot;},\n&quot;);
+//     }
+//     flag=1;
+// }
+// void dfs(int id){
+//     if(flag)return;
+//     int x=id/n,y=id%n;
+//     if(x&amp;&amp;!y){
+//         int xx=x-1;cnt[xx]=0;
+//         for(int i=0;i&lt;n;i++)if(a[xx][i]&amp;&amp;(!i||a[xx][i]!=a[xx][i-1]))cnt[xx]++;
+//         if(cnt[xx]!=3)return;
+//     }
+//     if(id==n*n){check();return;}
+//     if(a[x][y]){dfs(id+1);return;}
+//     dfs(id+1);
+//     if(x&lt;n-1&amp;&amp;!a[x+1][y]){
+//         t++,a[x][y]=a[x+1][y]=t;
+//         dfs(id+1);
+//         a[x][y]=a[x+1][y]=0;t--;
+//     }
+//     if(y&lt;n-1&amp;&amp;!a[x][y+1]){
+//         t++,a[x][y]=a[x][y+1]=t;
+//         dfs(id+1);
+//         a[x][y]=a[x][y+1]=0;t--;
+//     }
+// }
+int main(){
+    scanf(&quot;%d&quot;,&amp;n);
+    if(n&lt;3)puts(&quot;-1&quot;),exit(0);
+    if(n==3)puts(&quot;aa.\n..b\n..b&quot;),exit(0);
+    int x=(n-4)/4,y=n%4+4;
+    for(int i=0;i&lt;n;i++)for(int j=0;j&lt;n;j++)a[i][j]='.';
+    for(int i=0;i&lt;x;i++)
+        for(int j=0,p=i*4;j&lt;4;j++)
+            for(int k=0;k&lt;4;k++)
+                if(b[0][j][k])
+                    a[j+p][k+p]=b[0][j][k]+'a'-1;
+    for(int i=0,p=x*4;i&lt;y;i++)
+        for(int j=0;j&lt;y;j++)if(b[y-4][i][j])
+            a[i+p][j+p]=b[y-4][i][j]+'a';
+    for(int i=0;i&lt;n;i++)puts(a[i]);
+    return 0;
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://prutekoi.github.io/post/yi-jing-mei-you-shi-me-hao-hai-pa-de-liao">
+                  <h3 class="post-title">
+                    已经没有什么好害怕的了
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '7d25e626199673e220e3',
+        clientSecret: '18275839c46c0e4e748c553c6a30d28aca3f634a',
+        repo: 'Prutekoi.github.io',
+        owner: 'Prutekoi',
+        admin: ['Prutekoi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

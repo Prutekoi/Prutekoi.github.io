@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1578441818440">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1579692041932">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1578441818440" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1579692041932" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -145,6 +145,41 @@
 <li>小数输出位数要尽量多。。样例是坑人的。。</li>
 <li>节点编号从0开始时要注意对数组初始是0的影响</li>
 <li>设置的inf经过题目的+-之后可能会溢出。这时可以考虑fix（当一个值比inf还要大时重新设为inf）</li>
+<li>线段树合并想要可持久化（保留合并之前的）时只要保证对全局数组的修改时都是新建的节点就好了。还要注意叶子节点没有儿子，合并的信息不对。提供一个模板</li>
+</ul>
+<pre><code class="language-c++">int merge(int x,int y){
+	if(!x||!y)return x+y;
+	int z=++tot;
+	lc[z]=merge(lc[x],lc[y]),rc[z]=merge(rc[x],rc[y]);
+	fl[z]=fl[lc[z]]|fl[rc[z]];
+	return z;
+}
+</code></pre>
+<ul>
+<li>快读一定要写负数！！！！</li>
+<li>如果想把【1，2】，【3，4】看作不相邻的线段，只要所有端点离散化后坐标乘2即可。</li>
+<li>非常骚的线段排序（结构体下岗了）</li>
+</ul>
+<pre><code class="language-c++">for(int i=1;i&lt;=n;i++)l[i]=read(),r[i]=read();
+p.resize(n);
+iota(p.begin(),p.end(),1);
+sort(p.begin(),p.end(),[&amp;](int i,int j){
+    return l[i]&lt;l[j];
+});
+for(int i:p){
+
+}
+</code></pre>
+<p>很遗憾的是，这些语法都只能c++11支持，且会因为访问不连续而变慢（？）</p>
+<ul>
+<li>对序列整体做某种操作时，可能可以考虑差分不变，来简化问题。。。</li>
+<li>为防止输出-0.000，可以在输出时+eps。</li>
+<li>答案和数组一定要初始化（即使不知道为什么要初始化TAT）</li>
+<li>memset时的sizeof不能一股脑用int，要看清变量类型qwq</li>
+<li>无论什么题，都要想怎么样可以消除一些限制关系。如有一个限制叫做序列递增，这样限制了相邻项之间的关系，可能会导致dp维数增加，想要消除则可以考虑这个限制等价于差分非负，这样在差分数组上dp就可以消除两项之间的关系，从而降低dp维数。</li>
+<li>树套树等空间吃紧的数据结构可以考虑标记永久化，可以少开节点，往往有奇效</li>
+<li>树的数据结构问题转化为dfs序序列问题虽然不失为一种好方法，但是也要注意到树本身的性质：子树区间要么包含要么相离，如果不能利用好性质的话可能会自己给自己找麻烦</li>
+<li>取模确实很慢，能memcpy省取模的就memcpy，会有很大优化。</li>
 </ul>
 
             </div>

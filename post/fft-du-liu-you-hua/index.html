@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1578441818440">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1579692041932">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1578441818440" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1579692041932" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -168,58 +168,85 @@ int main(){
 <h3 id="任意模数ntt">任意模数NTT</h3>
 <p>三模数NTT没有写，直接上拆系数FFT吧。<br>
 我们知道卷积出的值大小是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msup><mn>0</mn><mn>23</mn></msup></mrow><annotation encoding="application/x-tex">10^{23}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span> 级别，直接FFT精度不够。那么考虑把每个数表示成 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>∗</mo><mi>M</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a*M+b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi><mo>=</mo><msup><mn>2</mn><mn>15</mn></msup></mrow><annotation encoding="application/x-tex">M=2^{15}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span></span>。<br>
-这样我们做4个卷积，每个卷积的精度都够了。如果加上上面提到的FFT次数优化，可以做到只用4次FFT。</p>
+这样我们做4个卷积，每个卷积的精度都够了。如果加上上面提到的FFT次数优化，可以做到只用4次FFT。<br>
+下面这份代码是封装得很好看的多项式求逆。看来不怕写任意模数了呢，其实特别好写。</p>
 <pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
-#define ld double
+#define LL long long
+#define double long double
 using namespace std;
-const int N=4e5+50,M=32768;
-const ld pi=acos(-1.0);
-int n,m,p,r[N],lim=1,l=-1,ans[N];
-struct cp{
-    ld x,y;
-    cp operator +(const cp &amp;b){return (cp){x+b.x,y+b.y};}
-    cp operator -(const cp &amp;b){return (cp){x-b.x,y-b.y};}
-    cp operator *(const cp &amp;b){return (cp){x*b.x-y*b.y,x*b.y+y*b.x};}
-    cp operator ~(){return (cp){x,-y};}
-}P[N],Q[N],I,rt[N],irt[N],a0[N],a1[N],b0[N],b1[N];
+const int N=4e5+50,M=32768,mod=1e9+7;
+const double Pi=acos(-1);
+int n,r[N],lo[N];
+struct node{
+	double x,y;
+	node operator +(const node &amp;b){return (node){x+b.x,y+b.y};}
+	node operator -(const node &amp;b){return (node){x-b.x,y-b.y};}
+	node operator *(const node &amp;b){return (node){x*b.x-y*b.y,x*b.y+y*b.x};}
+	node operator ~(){return (node){x,-y};}
+}a[N],b[N],a1[N],b1[N],rt[N],irt[N],I,O,c[N],d[N];
+int read(){
+	int x=0,c;
+	while(!isdigit(c=getchar()));
+	while(isdigit(c))x=x*10+c-48,c=getchar();
+	return x;
+}
+int Glim(int n){int lim=1;while(lim&lt;n)lim&lt;&lt;=1;return lim;}
+void getr(int n){for(int i=1;i&lt;n;i++)r[i]=r[i&gt;&gt;1]&gt;&gt;1^(i&amp;1)&lt;&lt;lo[n];}
+int power(int x,int y){
+	int z=1;
+	for(;y;y&gt;&gt;=1,x=1ll*x*x%mod)if(y&amp;1)z=1ll*z*x%mod;
+	return z;
+}
 void init(int n){
-    while(lim&lt;n)lim&lt;&lt;=1,l++;
-    for(int i=1;i&lt;lim;i++)r[i]=r[i&gt;&gt;1]&gt;&gt;1^(i&amp;1)&lt;&lt;l;
-    rt[1]=(cp){1,0};
-    for(int i=2;i&lt;lim;i&lt;&lt;=1)for(int j=0;j&lt;i;j++)
-        rt[i|j]=j&amp;1?(cp){cos(j*pi/i),sin(j*pi/i)}:rt[(i|j)&gt;&gt;1];
-    for(int i=1;i&lt;lim;i++)irt[i]=~rt[i];
+	int lim=Glim(n);
+	for(int i=2,j=0;i&lt;=lim;i&lt;&lt;=1,j++)lo[i]=j;
+	for(int i=1;i&lt;lim;i&lt;&lt;=1)for(int k=0;k&lt;i;k++)
+		rt[i+k]=(node){cos(Pi*k/i),sin(Pi*k/i)};
+	for(int i=1;i&lt;lim;i++)irt[i]=~rt[i];
 }
-void FFT(cp *a,int op){
-    for(int i=0;i&lt;lim;i++)if(i&lt;r[i])swap(a[i],a[r[i]]);
-    for(int i=1;i&lt;lim;i&lt;&lt;=1)
-        for(int t=i&lt;&lt;1,j=0;j&lt;lim;j+=t)
-            for(int k=0;k&lt;i;k++){
-                cp x=a[j+k],y=a[i+j+k]*(op&gt;0?rt[i+k]:irt[i+k]);
-                a[j+k]=x+y;a[i+j+k]=x-y;
-            }
-    if(op&lt;0)for(int i=0;i&lt;lim;i++)a[i]=a[i]*(cp){1.0l/lim,0};
+void FFT(node *a,int n,int op){
+	for(int i=0;i&lt;n;i++)if(i&lt;r[i])swap(a[i],a[r[i]]);
+	for(int i=1;i&lt;n;i&lt;&lt;=1)
+		for(int t=i&lt;&lt;1,j=0;j&lt;n;j+=t)
+			for(int k=0;k&lt;i;k++){
+				node x=a[j+k],y=a[i+j+k]*(op&gt;0?rt[i+k]:irt[i+k]);
+				a[j+k]=x+y;a[i+j+k]=x-y;
+			}
+	if(op&lt;0)for(int i=0;i&lt;n;i++)a[i].x/=n,a[i].y/=n;
 }
-void DFT(cp *a,cp *b){
-    for(int i=0;i&lt;lim;i++)P[i]=a[i]+b[i]*I;
-    FFT(P,1);for(int i=0;i&lt;lim;i++)Q[i]=~P[i?lim-i:0];
-    for(int i=0;i&lt;lim;i++){
-        cp p=P[i],q=Q[i];
-        a[i]=(p+q)*(cp){0.5,0},
-        b[i]=(q-p)*(cp){0,0.5};
-    }
+LL get(double x){return x&gt;0?(LL)(x+0.5):(LL)(x-0.5);}
+void MTT(node *a,node *b,int n){
+	for(int i=0;i&lt;n;i++)
+		a[i]=(node){get(a[i].x)/M,get(a[i].x)%M},
+		b[i]=(node){get(b[i].x)/M,get(b[i].x)%M};
+	FFT(a,n,1);FFT(b,n,1);
+	for(int i=0;i&lt;n;i++)a1[i]=~a[i?n-i:i],b1[i]=~b[i?n-i:i];
+	for(int i=0;i&lt;n;i++){
+		node p=a[i],q=a1[i],s=b[i],t=b1[i];
+		a[i]=(p+q)*(node){0.5,0};
+		b[i]=(s+t)*(node){0.5,0};
+		a1[i]=(q-p)*(node){0,0.5};
+		b1[i]=(t-s)*(node){0,0.5};
+	}
+	for(int i=0;i&lt;n;i++)a[i]=a[i]*b[i]+(a[i]*b1[i]+b[i]*a1[i])*I,b[i]=a1[i]*b1[i];
+	FFT(a,n,-1);FFT(b,n,-1);
+	for(int i=0;i&lt;n;i++)a[i].x=(get(a[i].x)%mod*M%mod*M+get(a[i].y)%mod*M+get(b[i].x))%mod;
 }
-int get(ld x){return x&gt;0?(long long)(x+0.5)%p:(long long)(x-0.5)%p;}
+void Inv(node *a,node *b,int n){
+	if(n==1){b[0].x=power(get(a[0].x),mod-2);return;}
+	int m=(n+1)&gt;&gt;1,lim=Glim(n+m);Inv(a,b,m);
+	for(int i=0;i&lt;lim;i++)c[i]=i&lt;n?a[i]:O,d[i]=i&lt;m?b[i]:O;
+	getr(lim);MTT(c,d,lim);
+	for(int i=0;i&lt;lim;i++)d[i]=i&lt;m?b[i]:O;
+	MTT(c,d,lim);
+	for(int i=m;i&lt;n;i++)b[i].x=-c[i].x;
+}
 int main(){
-    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;p);init(n+m+1);I=(cp){0,1};
-    for(int i=0,x;i&lt;=n;i++)scanf(&quot;%d&quot;,&amp;x),a0[i].x=x&gt;&gt;15,a1[i].x=x&amp;32767;
-    for(int i=0,x;i&lt;=m;i++)scanf(&quot;%d&quot;,&amp;x),b0[i].x=x&gt;&gt;15,b1[i].x=x&amp;32767;
-    DFT(a0,a1);DFT(b0,b1);
-    for(int i=0;i&lt;lim;i++)P[i]=a0[i]*b0[i],Q[i]=a0[i]*b1[i]+a1[i]*b0[i]+a1[i]*b1[i]*I;
-    FFT(P,-1);FFT(Q,-1);
-    for(int i=0;i&lt;=n+m;i++)
-        printf(&quot;%d &quot;,((1ll*M*M*get(P[i].x)%p+1ll*M*get(Q[i].x)%p+get(Q[i].y))%p+p)%p);
-    return 0;
+	scanf(&quot;%d&quot;,&amp;n);init(2*n);I=(node){0,1};O=(node){0,0};
+	for(int i=0;i&lt;n;i++)a[i].x=read();
+	Inv(a,b,n);
+	for(int i=0;i&lt;n;i++)printf(&quot;%d &quot;,(get(b[i].x)+mod)%mod);
+	return 0;
 }
 </code></pre>
 

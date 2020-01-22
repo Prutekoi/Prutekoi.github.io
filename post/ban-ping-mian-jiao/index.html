@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>计算几何板子 | Prutekoi&#39;s blog</title>
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1579692041932">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153103856-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-153103856-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://prutekoi.github.io">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1579692041932" class="site-logo">
+        <h1 class="site-title">Prutekoi&#39;s blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://prutekoi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">计算几何板子</h2>
+            <div class="post-date">2020-01-08</div>
+            
+            <div class="post-content">
+              <h3 id="半平面交">半平面交</h3>
+<p>没什么好说的。。计算几何是要多做些题才能对向量熟练运用</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=1010;
+const double eps=1e-9;
+int n,m,cnt,q[N],l,r;double ans;
+struct Poi{
+    double x,y;
+    Poi operator -(const Poi &amp;b){return (Poi){x-b.x,y-b.y};}
+    Poi operator +(const Poi &amp;b){return (Poi){x+b.x,y+b.y};}
+    double operator ^(const Poi &amp;b){return x*b.y-y*b.x;}
+    Poi operator *(const double &amp;b){return (Poi){x*b,y*b};}
+}b[N];
+struct Line{
+    Poi a,b,c;double d;//向量ab左侧的半平面
+    void get(){c=b-a;d=atan2(c.y,c.x);}
+    bool friend operator &lt;(Line a,Line b){
+        return abs(a.d-b.d)&gt;eps?a.d&lt;b.d:(a.c^(b.b-a.a))&gt;eps;//先按极角排序，然后再按相对位置排序
+    }
+}a[N],c[N];
+Poi inter(Line a,Line b){return b.a+b.c*(((b.a-a.a)^a.c)/(a.c^b.c));}//叉积求面积，相似求交点。画图可得。
+bool check(Line a,Line b,Line c){return (c.c^(inter(a,b)-c.a))&lt;-eps;}//判a和b的交点是否在c的半平面内
+int read(){
+    int x=0,c,f=1;
+    while(!isdigit(c=getchar()))c=='-'?f=-1:0;
+    while(isdigit(c))x=x*10+c-48,c=getchar();
+    return x*f;
+}
+int main(){
+    n=read();
+    for(int i=1,x;i&lt;=n;i++){
+        x=read();
+        for(int j=1;j&lt;=x;j++)b[j].x=read(),b[j].y=read();
+        b[x+1]=b[1];
+        for(int j=1;j&lt;=x;j++)a[++m]=(Line){b[j],b[j+1]};
+    }
+    for(int i=1;i&lt;=m;i++)a[i].get();
+    sort(a+1,a+m+1);
+    for(int i=1;i&lt;=m;i++){
+        if(abs(a[i].d-a[i-1].d)&gt;eps)++cnt;
+        c[cnt]=a[i];//去重
+    }
+    m=cnt;q[l=r=1]=1;q[++r]=2;
+    for(int i=3;i&lt;=m;i++){
+        while(l&lt;r&amp;&amp;check(c[q[r-1]],c[q[r]],c[i]))r--;
+        while(l&lt;r&amp;&amp;check(c[q[l]],c[q[l+1]],c[i]))l++;
+        q[++r]=i;
+    }
+    while(l&lt;r&amp;&amp;check(c[q[l]],c[q[l+1]],c[q[r]]))l++;
+    while(l&lt;r&amp;&amp;check(c[q[r-1]],c[q[r]],c[q[l]]))r--;
+    q[r+1]=q[l];
+    for(int i=l;i&lt;=r;i++)b[i]=inter(c[q[i]],c[q[i+1]]);
+    b[r+1]=b[l];
+    for(int i=l;i&lt;=r;i++)ans+=b[i]^b[i+1];ans/=2;
+    if(abs(ans)&lt;eps)ans=0;
+    printf(&quot;%.3f\n&quot;,ans);
+    return 0;
+}
+</code></pre>
+<h3 id="旋转卡壳">旋转卡壳</h3>
+<p>这个是求凸包直径，这真没什么好说的。。就是求完凸包之后双指针扫</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=1e5+50;
+int n,q[N],m,ans;
+struct Poi{
+	int x,y;
+	bool friend operator &lt;(Poi a,Poi b){return a.x!=b.x?a.x&lt;b.x:a.y&lt;b.y;}
+	int operator *(const Poi &amp;b){return x*b.y-y*b.x;}
+	Poi operator -(const Poi &amp;b){return (Poi){x-b.x,y-b.y};}
+}a[N],b[N];
+int cross(Poi a,Poi b,Poi c){return (b-a)*(c-a);}
+int dis(Poi a,Poi b){return (b.x-a.x)*(b.x-a.x)+(b.y-a.y)*(b.y-a.y);}
+int main(){
+	scanf(&quot;%d&quot;,&amp;n);
+	for(int i=1;i&lt;=n;i++)scanf(&quot;%d%d&quot;,&amp;a[i].x,&amp;a[i].y);
+	sort(a+1,a+n+1);q[m=1]=1;
+	for(int i=2;i&lt;=n;q[++m]=i++)
+		while(m&gt;1&amp;&amp;cross(a[q[m-1]],a[q[m]],a[i])&lt;=0)m--;
+	for(int i=n,l=m;i;q[++m]=i--)
+		while(m&gt;l&amp;&amp;cross(a[q[m-1]],a[q[m]],a[i])&lt;=0)m--;
+	m--;for(int i=0;i&lt;m;i++)b[i]=a[q[i+1]];
+	for(int i=0,j=i+1;i&lt;m;i++){
+		while((b[(i+1)%m]-b[i])*(b[(j+1)%m]-b[j%m])&gt;0)j++;
+		ans=max(ans,dis(b[i],b[j%m]));
+	}
+	printf(&quot;%d\n&quot;,ans);
+	return 0;
+}
+</code></pre>
+<h3 id="最小圆覆盖">最小圆覆盖</h3>
+<p>只要知道一个定理：<br>
+若当前点集的最小覆盖圆为S且新加入的点不被S覆盖，则此点在新圆上。<br>
+于是我们只要十分naive地做就好了。具体看注释。还有，外接圆好好求啊233<br>
+还有复杂度，最内层循环是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> 的，外层循环有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mn>3</mn><mi>n</mi></mfrac></mrow><annotation encoding="application/x-tex">\frac{3}{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> 的几率进入内层循环。故总复杂度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>。<br>
+还有就是这个是不会出现三点共线求外接圆的情况的，具体的自己在纸上模拟几种情况即可。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define double long double
+using namespace std;
+const int N=1e5+50;
+const double eps=1e-9;
+int n;double r;
+struct poi{
+    double x,y;
+    poi operator +(const poi &amp;b){return (poi){x+b.x,y+b.y};}
+    poi operator -(const poi &amp;b){return (poi){x-b.x,y-b.y};}
+    double operator *(const poi &amp;b){return x*b.y-y*b.x;}
+    poi operator *(const double &amp;b){return (poi){x*b,y*b};}
+    poi operator ~(){return (poi){-y,x};}//向量旋转90度
+}a[N],O;
+double dis(poi a,poi b){
+    double xx=a.x-b.x,yy=a.y-b.y;
+    return sqrt(xx*xx+yy*yy);
+}
+bool out(poi x){return dis(O,x)&gt;r+eps;}
+poi inter(poi s1,poi t1,poi s2,poi t2){
+    poi v1=t1-s1,v2=t2-s2;
+    return s2+v2*((s2-s1)*v1/(v1*v2));
+}
+void circle(poi a,poi b,poi c){
+    poi xx=(a+b)*0.5,yy=(b+c)*0.5;
+    O=inter(xx+~(a-xx),xx+~(b-xx),yy+~(b-yy),yy+~(c-yy));//中垂线交点。
+    r=dis(O,a);
+}
+int main(){
+    scanf(&quot;%d&quot;,&amp;n);
+    for(int i=1;i&lt;=n;i++)scanf(&quot;%Lf%Lf&quot;,&amp;a[i].x,&amp;a[i].y);
+    random_shuffle(a+1,a+n+1);O=a[1];r=0;
+    for(int i=1;i&lt;=n;i++)if(out(a[i])){//外层循环为求前i个点的最小覆盖圆。
+        O=a[i];r=0;//因为这个点一定在圆上。
+        for(int j=1;j&lt;i;j++)if(out(a[j])){//第二层循环为求前j个点和第i个点的最小覆盖圆。
+            O=(a[i]+a[j])*0.5;r=dis(a[i],a[j])/2;//因为这两个点都一定在圆上。
+            for(int k=1;k&lt;j;k++)if(out(a[k])){//这层...
+                circle(a[i],a[j],a[k]);//这三个点都一定在圆上。
+            }
+        }
+    }//完事233
+    printf(&quot;%.10Lf\n%.10Lf %.10Lf&quot;,r,O.x,O.y);
+    return 0;
+}
+</code></pre>
+<h3 id="辛普森积分">辛普森积分</h3>
+<p>让你求一个要多奇怪有多奇怪的函数的积分。<br>
+首先我们知道二次函数的积分满足这个：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mo>∫</mo><mi>l</mi><mi>r</mi></msubsup><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mi>d</mi><mi>x</mi><mo>=</mo><mfrac><mi>m</mi><mn>3</mn></mfrac><mo>(</mo><mi>f</mi><mo>(</mo><mi>l</mi><mo>)</mo><mo>+</mo><mi>f</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>+</mo><mn>4</mn><mi>f</mi><mo>(</mo><mi>m</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">\int_l^rf(x)dx=\frac{m}{3}(f(l)+f(r)+4f(m))
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.326242em;vertical-align:-0.9119499999999999em;"></span><span class="mop"><span class="mop op-symbol large-op" style="margin-right:0.44445em;position:relative;top:-0.0011249999999999316em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.414292em;"><span style="top:-1.7880500000000001em;margin-left:-0.44445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span><span style="top:-3.8129000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9119499999999999em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.7935600000000003em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.10756em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mo>=</mo><mfrac><mrow><mi>l</mi><mo>+</mo><mi>r</mi></mrow><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">m=\frac{l+r}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.2251079999999999em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mbin mtight">+</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>。推导可以见<a href="https://www.luogu.com.cn/problemnew/solution/P4525">洛谷题解</a>，就是拆一波再合一波。<br>
+这东西只用求 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 次原函数即可。所以可以考虑用二次函数拟合原函数。<br>
+然后我们分几段呢？分得多会T，分得少会WA。那么我们可以让程序自己判断是否够精度，不够就继续往下分。其实原理非常简单啦！</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const double eps=1e-7;
+double a,b,c,d,l,r;
+double f(double x){return (c*x+d)/(a*x+b);}//要积分的原函数
+double simpson(double l,double r){return (r-l)*(f(l)+f(r)+4*f((l+r)/2))/6;}//
+double calc(double l,double r,double eps,double ans){
+    double mid=(l+r)/2;
+    double ll=simpson(l,mid),rr=simpson(mid,r);
+    if(abs(ll+rr-ans)&lt;eps*15)return ll+rr;
+    return calc(l,mid,eps/2,ll)+calc(mid,r,eps/2,rr);
+}
+int main(){
+    scanf(&quot;%lf%lf%lf%lf%lf%lf&quot;,&amp;a,&amp;b,&amp;c,&amp;d,&amp;l,&amp;r);
+    printf(&quot;%.6f&quot;,calc(l,r,eps,simpson(l,r)));
+    return 0;
+}
+</code></pre>
+<p>至于*15是为什么？<br>
+<img src="https://prutekoi.github.io/post-images/1578889598167.png" alt="" loading="lazy"><br>
+大概是这样可以还原真实的误差（听说是实验结果？）这篇文章叫AdaptiveQuadProof。</p>
+<p>然后就有一个特别经典的例题：月下柠檬树<br>
+题意是有一棵树，它是好多台体和顶上的锥体堆起来的，给出月光的角度，求这棵树投影的面积。<br>
+首先因为是平行投影，所以相当于是把所有圆平移了，然后因为圆与圆之间是平滑地相接的，所以会有公切线（相当于梯形）。<br>
+面积是关于x轴对称的，只要求上方的面积就好了。求面积又让人想到积分，即使这函数是分了无数段233，不过它还是连续的，这就可以积分了。<br>
+于是求出所有的公切线（用几何性质导角什么的），然后一个点的函数值就是定义域包含它的所有函数的最大值，直接暴力扫取max即可，然后套板子，其实特别短。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define y1 orzjackpei
+using namespace std;
+const int N=510;
+const double eps=1e-6;
+int n;double alpha,x[N],R[N],l[N],r[N],y1[N],y2[N],mx,mn;
+double f(double X){
+    double Y=0;
+    for(int i=1;i&lt;n;i++)if(X&gt;x[i]-R[i]+eps&amp;&amp;X&lt;x[i]+R[i]-eps)
+        Y=max(Y,sqrt(R[i]*R[i]-(X-x[i])*(X-x[i])));
+    for(int i=1;i&lt;n;i++)if(X&gt;l[i]-eps&amp;&amp;X&lt;r[i]+eps)
+        Y=max(Y,y1[i]+(y2[i]-y1[i])*(X-l[i])/(r[i]-l[i]));
+    return Y;
+}
+double simpson(double l,double r){return (r-l)*(f(l)+f(r)+4*f((l+r)/2))/6;}
+double calc(double l,double r,double eps,double A){
+    double mid=(l+r)/2,ll=simpson(l,mid),rr=simpson(mid,r);
+    if(abs(ll+rr-A)&lt;eps*15)return ll+rr;
+    return calc(l,mid,eps/2,ll)+calc(mid,r,eps/2,rr);
+}
+int main(){
+    scanf(&quot;%d%lf&quot;,&amp;n,&amp;alpha);alpha=1/tan(alpha);n++;
+    for(int i=1;i&lt;=n;i++)scanf(&quot;%lf&quot;,&amp;x[i]),x[i]+=x[i-1];
+	for(int i=1;i&lt;=n;i++)x[i]*=alpha;
+    for(int i=1;i&lt;n;i++)scanf(&quot;%lf&quot;,&amp;R[i]),mx=max(mx,x[i]+R[i]),mn=min(mn,x[i]-R[i]);
+    mx=max(mx,x[n]);
+    for(int i=1;i&lt;n;i++){
+        double x1=x[i],x2=x[i+1],r1=R[i],r2=R[i+1];
+        if(x2-x1&lt;abs(r1-r2)+eps){l[i]=-1e9,r[i]=-1e9;continue;}
+        double s=abs(r1-r2)/(x2-x1),c=sqrt(1-s*s);
+        if(r2&lt;r1)l[i]=x1+r1*s,r[i]=x2+r2*s;
+        else l[i]=x1-r1*s,r[i]=x2-r2*s;
+        y1[i]=r1*c;y2[i]=r2*c;
+    }
+    printf(&quot;%.2f&quot;,calc(mn,mx,eps,simpson(mn,mx))*2);
+    return 0;
+}
+</code></pre>
+<p>有一个要注意的，就是当函数有大段为0（或者说为一个相同值）的时候需要把所有连续的不为0的段分别积分。如求圆面积并时这么一个数据：</p>
+<pre><code>2
+0 0 1
+100 100 1
+</code></pre>
+<p>直接求会使程序认为这个函数就是一个常为0的函数，从而积出0。<br>
+还有，目前已知除了求圆并以外别的图形都有更高效的算法，且辛普森积分确实会有精度问题，不得已再用吧qwq</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://prutekoi.github.io/post/dan-chun-xing">
+                  <h3 class="post-title">
+                    单纯形
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '7d25e626199673e220e3',
+        clientSecret: '18275839c46c0e4e748c553c6a30d28aca3f634a',
+        repo: 'Prutekoi.github.io',
+        owner: 'Prutekoi',
+        admin: ['Prutekoi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

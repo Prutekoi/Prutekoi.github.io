@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Jonnson 费用流 | Prutekoi&#39;s blog</title>
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1579692041932">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153103856-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-153103856-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://prutekoi.github.io">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1579692041932" class="site-logo">
+        <h1 class="site-title">Prutekoi&#39;s blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://prutekoi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Jonnson 费用流</h2>
+            <div class="post-date">2020-01-10</div>
+            
+            <div class="post-content">
+              <p>众所周知SPFA死了。WC2019的课件中给出了对SPFA的各种hack。<br>
+那么费用流也不能好好用SPFA了qwq。</p>
+<p>首先我们知道有一个johnson最短路是可以对带负权的图进行改造使得它可以跑dijk。考虑借鉴这个算法。</p>
+<p>假设一开始的图费用都是正的，我们就可以直接跑dijk。可是一次增广之后有些边反向了qwq。那么我们还是考虑维护一个势 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mo>[</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">h[]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">[</span><span class="mclose">]</span></span></span></span>。结论是每次 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>+</mo><mo>=</mo><mi>d</mi><mi>i</mi><mi>s</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">h[i]+=dis[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mord">+</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 即可。证明：<img src="https://prutekoi.github.io/post-images/1578653704566.png" alt="" loading="lazy"><br>
+代码：</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define LL long long
+#define pli pair&lt;LL,int&gt;
+using namespace std;
+const int N=1e5+50;
+const LL inf=0x3f3f3f3f3f3f3f3f;
+int n,m,S,T,ver[N],edge[N],val[N],nxt[N],head[N],tot=1,mn[N],f[N];LL dis[N],h[N],ans1,ans2;bool vis[N];
+greater&lt;pli&gt; cmp;
+struct node{
+    pli a[N];int n;
+    int size(){return n;}
+    void push(pli x){a[n++]=x;push_heap(a,a+n,cmp);}
+    void pop(){pop_heap(a,a+n--,cmp);}
+    pli top(){return *a;}
+}q;
+int read(){
+    int x=0,c,f=1;
+    while(!isdigit(c=getchar()))c=='-'?f=-1:0;
+    while(isdigit(c))x=x*10+c-48,c=getchar();
+    return x;
+}
+void add(int x,int y,int z,int v){
+    ver[++tot]=y;edge[tot]=z;val[tot]=v;nxt[tot]=head[x];head[x]=tot;
+    ver[++tot]=x;edge[tot]=0;val[tot]=-v;nxt[tot]=head[y];head[y]=tot;
+}
+bool dijk(){
+    for(int i=1;i&lt;=n;i++)h[i]+=dis[i];
+    memset(dis,0x3f,sizeof(long long)*(n+1));
+    memset(vis,0,n+1);
+    dis[S]=0;q.push(make_pair(0,S));mn[S]=1e9;
+    while(q.size()){
+        int x=q.top().second;q.pop();
+        if(vis[x])continue;
+        vis[x]=1;
+        for(int i=head[x],y;i;i=nxt[i]){
+            y=ver[i];
+            if(edge[i]&amp;&amp;dis[y]&gt;dis[x]+val[i]+h[x]-h[y]){
+                dis[y]=dis[x]+val[i]+h[x]-h[y];
+                mn[y]=min(mn[x],edge[i]);f[y]=i;
+                q.push(make_pair(dis[y],y));
+            }
+        }
+    }
+    return dis[T]!=inf;
+}
+void dfs(){
+    int x=T,k=mn[T];ans1+=k;
+    for(;x!=S;x=ver[f[x]^1]){
+        edge[f[x]]-=k;edge[f[x]^1]+=k;
+        ans2+=1ll*k*val[f[x]];
+    }
+}
+int main(){
+    scanf(&quot;%d%d%d%d&quot;,&amp;n,&amp;m,&amp;S,&amp;T);
+    for(int i=1,x,y,z,v;i&lt;=m;i++){
+        x=read();y=read();z=read();v=read();
+        add(x,y,z,v);
+    }
+    while(dijk())dfs();
+    printf(&quot;%lld %lld\n&quot;,ans1,ans2);
+}
+</code></pre>
+<p>另：这份代码中的堆是手写的。比priority_queue快一倍。<br>
+常用的费用流算法复杂度都是假的，不过一般没人卡就是了。复杂度正确的<a href="https://ouuan.github.io/%E5%9F%BA%E4%BA%8E-Capacity-Scaling-%E7%9A%84%E5%BC%B1%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%A4%8D%E6%9D%82%E5%BA%A6%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8%E6%B5%81%E7%AE%97%E6%B3%95/">费用流</a><br>
+为什么费用流不能在最短路图上多路增广？因为最短路图上仍然可能有环。故会导致不能使用当前弧优化，可能会如同爆搜。其实也是可以写的。打vis标记，出时撤回。</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://prutekoi.github.io/post/ban-ping-mian-jiao">
+                  <h3 class="post-title">
+                    计算几何板子
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '7d25e626199673e220e3',
+        clientSecret: '18275839c46c0e4e748c553c6a30d28aca3f634a',
+        repo: 'Prutekoi.github.io',
+        owner: 'Prutekoi',
+        admin: ['Prutekoi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
