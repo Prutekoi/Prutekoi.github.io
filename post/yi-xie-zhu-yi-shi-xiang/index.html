@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1579692113319">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1579701370099">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1579692113319" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1579701370099" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -180,7 +180,12 @@ for(int i:p){
 <li>树套树等空间吃紧的数据结构可以考虑标记永久化，可以少开节点，往往有奇效</li>
 <li>树的数据结构问题转化为dfs序序列问题虽然不失为一种好方法，但是也要注意到树本身的性质：子树区间要么包含要么相离，如果不能利用好性质的话可能会自己给自己找麻烦</li>
 <li>取模确实很慢，能memcpy省取模的就memcpy，会有很大优化。</li>
+<li>fread 数组的size太大会T，一般1&lt;&lt;15实测是很快的。cin加上</li>
 </ul>
+<pre><code class="language-c++">ios::sync_with_stdio(false);
+cin.tie(nullptr);
+</code></pre>
+<p>这两行后比scanf快（不过懒得背）。</p>
 
             </div>
             
