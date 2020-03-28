@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>很牛逼的经历 | Prutekoi&#39;s blog</title>
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1585405908174">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153103856-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-153103856-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://prutekoi.github.io">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1585405908174" class="site-logo">
+        <h1 class="site-title">Prutekoi&#39;s blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://prutekoi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">很牛逼的经历</h2>
+            <div class="post-date">2020-03-28</div>
+            
+            <div class="post-content">
+              <h3 id="joiscd4t1">JOISCD4T1</h3>
+<blockquote>
+<p>给定一棵树，每个节点有颜色，每次可以合并两个颜色 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x,y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 使得所有颜色为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 的颜色都变成 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>。求最少的合并次数使得有一个颜色是联通的。<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>200000</mn></mrow><annotation encoding="application/x-tex">1\leq n\leq 200000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+</blockquote>
+<p><s>这题我考试的时候看错题自闭一整天</s></p>
+<p>正经做法有两种：点分治和树剖优化建图跑SCC。</p>
+<h4 id="点分治">点分治</h4>
+<p>每次钦定这个分治中心的颜色必须选。而之前已经计算过的颜色不能再选了，因为那样不会更优。于是可能被选到的点就被限制在当前分治到的这个联通块中，于是就可以点分治做了。不断迭代地去找需要选的颜色，注意保证复杂度。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define pb push_back
+using namespace std;
+const int N=2e5+50;
+int n,k,c[N],f[N],q[N],l,r,st[N],tp,zz[N];bool ban[N],be[N],fail,vvis[N];
+vector&lt;int&gt;v[N],vv[N];
+int sum,dat,rt,sz[N],ans;bool vis[N];
+void findr(int x,int ff){
+	int mx=0;sz[x]=1;
+	for(int i=0,y;i&lt;v[x].size();i++)
+		if(!vis[y=v[x][i]]&amp;&amp;y!=ff)
+			findr(y,x),sz[x]+=sz[y],mx=max(mx,sz[y]);
+	mx=max(mx,sum-sz[x]);if(mx&lt;dat)dat=mx,rt=x;
+}
+void dfs(int x,int ff,int z){
+	f[x]=ff;if(!ban[c[x]])vv[c[x]].pb(x);
+	if(!zz[c[x]])zz[c[x]]=z;else if(zz[c[x]]!=z)st[++tp]=c[x];
+	for(int i=0,y;i&lt;v[x].size();i++)
+		if(!vis[y=v[x][i]]&amp;&amp;y!=ff)dfs(y,x,f[x]?z:y);
+}
+void dfs2(int x,int ff){
+	vv[c[x]].clear(),vvis[x]=0;be[c[x]]=zz[c[x]]=0;
+	for(int i=0,y;i&lt;v[x].size();i++)
+		if(!vis[y=v[x][i]]&amp;&amp;y!=ff)dfs2(y,x);
+}
+void solve(int x){
+	vis[x]=1;
+	dfs(x,0,0);be[q[l=r=1]=c[x]]=1;vvis[x]=1;fail=ban[c[x]];
+	while(l&lt;=r){
+		int x=q[l++];
+		for(int i=0;i&lt;vv[x].size();i++){
+			for(int j=vv[x][i];!vvis[j];j=f[j]){
+				if(ban[c[j]]){fail=1;break;}vvis[j]=1;
+				if(!be[c[j]])be[q[++r]=c[j]]=1;
+			}
+			if(fail)break;
+		}
+		if(fail)break;
+	}
+	if(!fail)ans=min(ans,r);
+	while(tp)ban[st[tp--]]=1;ban[c[x]]=1;
+	dfs2(x,0);
+	for(int i=0,y;i&lt;v[x].size();i++)if(!vis[y=v[x][i]])
+		sum=sz[y],dat=1e9,findr(y,x),solve(rt);
+}
+int main(){
+	scanf(&quot;%d%d&quot;,&amp;n,&amp;k);
+	for(int i=1,x,y;i&lt;n;i++)
+		scanf(&quot;%d%d&quot;,&amp;x,&amp;y),
+		v[x].pb(y),v[y].pb(x);
+	for(int i=1;i&lt;=n;i++)scanf(&quot;%d&quot;,&amp;c[i]);
+	ans=sum=n;dat=1e9;findr(1,0);solve(rt);
+	cout&lt;&lt;ans-1;
+}
+</code></pre>
+<h4 id="树剖">树剖</h4>
+<p>考虑如果两个颜色 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x,y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 有选了颜色 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 就必须选颜色 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 的关系（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 的路径上），我们就从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 向 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 连边。这样建好图之后如果要选 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 就要把所有它能到的点都选上。这其实是一个很经典的模型：显然一个SCC中的点要选会一块选，而一定是选出度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 的SCC比较优。于是建好图跑tarjan就好了。</p>
+<p>发现连边其实也是比较显然的。设颜色 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 的所有点的lca为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span></span></span></span>，那么颜色 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 会向 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span></span></span></span> 与所有颜色为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 的点的路径上的颜色连边。连树上一条路径的话可以想到树剖优化，但是裸的树剖套线段树是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><msup><mi>g</mi><mn>2</mn></msup><mi>n</mi></mrow><annotation encoding="application/x-tex">nlog^2n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.008548em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord mathdefault">n</span></span></span></span> 的，可能过不去。我们只要利用剖出的路径会是一些重链的前缀这个性质，预处理重链前缀的节点就可以做到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span>。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define pb push_back
+using namespace std;
+const int N=2e5+50,M=6e6+50;
+int n,k,f[N],sz[N],d[N],dfn[M],idfn[N],tp[N],clk,rt[N],c[N],ans;
+int lc[M],rc[M],rr,cnt,id[N],low[M],st[M],tt,scc,val[M],bel[M];bool ins[M],ban[M];
+vector&lt;int&gt;v[N],vv[M],mem[M];
+void dfs1(int x){
+    if(f[x])v[x].erase(find(v[x].begin(),v[x].end(),f[x]));
+    d[x]=d[f[x]]+1;sz[x]=1;
+    for(int i=0,y;i&lt;v[x].size();i++){
+        f[y=v[x][i]]=x,dfs1(y),sz[x]+=sz[y];
+        if(sz[y]&gt;sz[v[x][0]])swap(v[x][i],v[x][0]);
+    }
+}
+void dfs2(int x){
+    tp[x]^x?vv[id[x]=++cnt].pb(id[f[x]]),vv[cnt].pb(c[x]),0:id[x]=c[x];
+    idfn[dfn[x]=++clk]=x;
+    for(int i=0,y;i&lt;v[x].size();i++)
+        y=v[x][i],tp[y]=i?y:tp[x],dfs2(y);
+}
+int lca(int x,int y){
+    for(;tp[x]!=tp[y];x=f[tp[x]])
+        if(d[tp[x]]&lt;d[tp[y]])swap(x,y);
+    return d[x]&lt;d[y]?x:y;
+}
+void build(int &amp;x,int l,int r){
+    if(l==r){x=c[idfn[l]];return;}
+    int mid=(l+r)&gt;&gt;1;x=++cnt;
+    build(lc[x],l,mid);build(rc[x],mid+1,r);
+    vv[x].pb(lc[x]);vv[x].pb(rc[x]);
+}
+void query(int x,int l,int r,int ql,int qr,int d){
+    if(l&gt;qr||r&lt;ql)return;
+    if(l&gt;=ql&amp;&amp;r&lt;=qr){vv[d].pb(x);return;}
+    int mid=(l+r)&gt;&gt;1;
+    query(lc[x],l,mid,ql,qr,d);
+    query(rc[x],mid+1,r,ql,qr,d);
+}
+void query(int x,int y,int d){
+    for(;tp[x]!=tp[y];y=f[tp[y]])vv[d].pb(id[y]);
+    query(rr,1,n,dfn[x],dfn[y],d);
+}
+void cmin(int &amp;x,int y){y&lt;x?x=y:0;}
+void tarjan(int x){
+    dfn[x]=low[x]=++clk;
+    st[++tt]=x;ins[x]=1;
+    for(int i=0,y;i&lt;vv[x].size();i++)
+        if(!dfn[y=vv[x][i]])tarjan(y),cmin(low[x],low[y]);
+        else if(ins[y])cmin(low[x],dfn[y]);
+    if(low[x]==dfn[x]){
+        int y;++scc;
+        do{
+            y=st[tt--];ins[y]=0;
+            val[scc]+=y&lt;=k;bel[y]=scc;
+            mem[scc].pb(y);
+        }while(y!=x);
+    }
+}
+int main(){
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;k);cnt=ans=k;
+    for(int i=1,x,y;i&lt;n;i++)
+        scanf(&quot;%d%d&quot;,&amp;x,&amp;y),
+        v[x].pb(y),v[y].pb(x);
+    for(int i=1;i&lt;=n;i++)scanf(&quot;%d&quot;,&amp;c[i]);
+    dfs1(1);dfs2(tp[1]=1);build(rr,1,n);
+    for(int i=1;i&lt;=n;i++){int &amp;z=rt[c[i]];z=z?lca(z,i):i;}
+    for(int i=1;i&lt;=n;i++)query(rt[c[i]],i,c[i]);
+    memset(dfn,0,sizeof(dfn));clk=0;
+    for(int i=1;i&lt;=cnt;i++)if(!dfn[i])tarjan(i);
+    for(int i=1;i&lt;=scc;i++){
+        for(int j=0;j&lt;mem[i].size();j++){
+            for(int x=mem[i][j],y,k=0;k&lt;vv[x].size();k++){
+                if(bel[y=vv[x][k]]!=i&amp;&amp;(val[bel[y]]||ban[bel[y]]))ban[i]=1;
+            }
+        }
+        if(!ban[i]&amp;&amp;val[i])cmin(ans,val[i]);
+    }
+    cout&lt;&lt;ans-1;
+    return 0;
+}
+</code></pre>
+<h3 id="正题">正题</h3>
+<p>在比赛后当天与四川神仙讨论时，他说他就写了个乱搞：倍增lca和tarjan。<br>
+当时我就觉得不太会啊，这又是另一种神仙做法吧。<br>
+后来讲了题，发现哪种也不是他的，又去问了问他。<br>
+他的做法：</p>
+<blockquote>
+<p>对于每个节点，如果它不是所在颜色的lca，那么就把它的颜色向它父亲的颜色连边，然后就跑tarjan找到出度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 的SCC。</p>
+</blockquote>
+<p>很困难地理解了他的意思之后提出了对正确性的质疑，并举了例子。他说：你说的有道理。但这不影响正确性啊。<br>
+我看神仙已经有对我烦的意思了，于是也没再多打扰他。</p>
+<p>玩了好几个数据发现都没有问题。后来实现了他的做法（优化了一下实现了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>），轻松地拿到了UOJ，LOJ的最短代码和最快代码！发到了群里炫耀，并求助大家正确性的证明。<br>
+z7z刚开始很确信这个算法是错误的，并尝试给出hack。他说hack成功了，但其实还是假了。<br>
+后来z7z也相信这个算法是正确的了，并给出了感性理解（谁不会感性理解啊）。</p>
+<p>我也开始好好思考怎么证明它。我有了一个证明的思路，但是发现有一个地方说不过去。然后就想构造一个这样的数据说不定就有证明的思路呢？？</p>
+<p>然后。。这个算法它死了23333333谁也没想到是这样的结局233333。</p>
+<p>于是，忍痛亲手hack自己的最优解.jpg<br>
+最后放出hack数据结束这篇扯淡23333</p>
+<pre><code>7 3
+1 2
+2 3
+3 4
+4 5
+5 6
+6 7
+3
+1
+3
+2
+1
+2
+1
+</code></pre>
+<p>错代码还是不要放了，虽然它看起来真的很优秀QAQ</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://prutekoi.github.io/post/niu-bi-ti/">
+                  <h3 class="post-title">
+                    牛逼题
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '7d25e626199673e220e3',
+        clientSecret: '18275839c46c0e4e748c553c6a30d28aca3f634a',
+        repo: 'Prutekoi.github.io',
+        owner: 'Prutekoi',
+        admin: ['Prutekoi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

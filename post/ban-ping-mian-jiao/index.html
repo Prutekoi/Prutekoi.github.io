@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1581911980568">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1585405908174">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1581911980568" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1585405908174" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -171,6 +171,8 @@ int main(){
     return 0;
 }
 </code></pre>
+<p>半平面交两个while循环弹队尾和队首确实是有顺序要求的！！！应该先弹队尾再弹队首。<a href="https://www.luogu.com.cn/discuss/show/180582?page=1">Orz red</a>，经实验表明最后的队首弹队尾和队尾弹队首好像没有顺序要求。<br>
+没见过半平面交可能会是无穷的题目。但是半平面交是空集的还是有可能的。上面这个代码如果是空集的话会输出nan QAQ。怎么判断是不是空集？当已经确定交集一定不是无穷之后，交集为空当且仅当最后队列中的元素小于等于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>。</p>
 <h3 id="旋转卡壳">旋转卡壳</h3>
 <p>这个是求凸包直径，这真没什么好说的。。就是求完凸包之后双指针扫</p>
 <pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
@@ -340,7 +342,7 @@ int main(){
                 <div class="next">下一篇</div>
                 <a href="https://prutekoi.github.io/post/dan-chun-xing/">
                   <h3 class="post-title">
-                    单纯形
+                    线性规划，单纯形和对偶问题
                   </h3>
                 </a>
               </div>
