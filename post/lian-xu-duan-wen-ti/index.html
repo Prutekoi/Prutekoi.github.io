@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>连续段问题 | Prutekoi&#39;s blog</title>
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1592464833841">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153103856-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-153103856-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://prutekoi.github.io">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1592464833841" class="site-logo">
+        <h1 class="site-title">Prutekoi&#39;s blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://prutekoi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">连续段问题</h2>
+            <div class="post-date">2020-03-30</div>
+            
+            <div class="post-content">
+              <p>这类问题是有一个排列，若一个区间的值域也是连续的，那么称它是一个连续段，然后问一些相关问题。</p>
+<p>连续段有一些显然的性质。</p>
+<ul>
+<li>若 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mo separator="true">,</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">A,B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span> 是连续段且 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mo separator="true">,</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">A,B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span> 交集非空，则 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mo>∪</mo><mi>B</mi><mo separator="true">,</mo><mi>A</mi><mo>∩</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">A\cup B,A\cap B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∩</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span> 都是连续段。若还满足互不包含，则它们的差集也是连续段。</li>
+</ul>
+<h3 id="cerc2017intrinsic-interval"><a href="https://www.luogu.com.cn/problem/P4747">[CERC2017]Intrinsic Interval</a></h3>
+<blockquote>
+<p>给定一个长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的排列，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span> 次询问，每次给定 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo separator="true">,</mo><mi>r</mi></mrow><annotation encoding="application/x-tex">l,r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span> 求包含 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l,r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span> 的最短连续段。</p>
+</blockquote>
+<p>经典例题。暑假纪中就考过，但是题解给了一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><msup><mi>log</mi><mo>⁡</mo><mn>2</mn></msup><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n\log^2n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.148448em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8984479999999999em;"><span style="top:-3.1473400000000002em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> 的分治做法。</p>
+<h4 id="离线做法">离线做法</h4>
+<p>首先分析一下包含一个区间的连续段，如果有两个连续段都包含了这个区间，那么它们的交一定也包含这个连续段，而且根据上面的性质交也是连续段。这样就推出包含一个区间的最短连续段一定是可行的段中右端点最靠左的。</p>
+<p>那么我们就考虑离线，考虑每个右端点。如何判定一个区间是否是连续段？考虑值域连续的性质，如果把每个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>i</mi><mo separator="true">,</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[i,i+1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 都连边的话，其实等价于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l,r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span> 的生成子图中有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>−</mo><mi>l</mi></mrow><annotation encoding="application/x-tex">r-l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span> 条边。即 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>−</mo><mi>l</mi><mo>=</mo><mi>c</mi><mi>n</mi><mi>t</mi><mo separator="true">,</mo><mi>c</mi><mi>n</mi><mi>t</mi><mo>+</mo><mi>l</mi><mo>=</mo><mi>r</mi></mrow><annotation encoding="application/x-tex">r-l=cnt,cnt+l=r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>。那么我们把每个点的初值设为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>，再去维护 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span> 的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>n</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">cnt</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span></span></span></span>，如果这个位置的值等于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span> 那么就是一个连续段。而 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>n</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">cnt</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span></span></span></span> 只可能更小，所以等于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span> 的就是最大值。那么维护区间最大值，查询时线段树上二分即可。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=1e5+50;
+int n,m,a[N],mx[N*4],laz[N*4],p[N],L[N],R[N];
+struct node{int l,r,id;bool operator &lt;(const node &amp;b)const{return l&lt;b.l;}}q[N];
+priority_queue&lt;node&gt;pq;
+bool cmp(node a,node b){return a.r&lt;b.r;}
+void build(int x,int l,int r){
+	if(l==r){mx[x]=l;return;}
+	int mid=(l+r)&gt;&gt;1;
+	build(x&lt;&lt;1,l,mid);
+	build(x&lt;&lt;1|1,mid+1,r);
+	mx[x]=max(mx[x&lt;&lt;1],mx[x&lt;&lt;1|1]);
+}
+void down(int x){
+	int L=x&lt;&lt;1,R=x&lt;&lt;1|1,&amp;d=laz[x];
+	mx[L]+=d;laz[L]+=d;mx[R]+=d;laz[R]+=d;d=0;
+}
+void change(int x,int l,int r,int ql,int qr){
+	if(l&gt;qr||r&lt;ql)return;
+	if(l&gt;=ql&amp;&amp;r&lt;=qr){mx[x]++;laz[x]++;return;}
+	int mid=(l+r)&gt;&gt;1;down(x);
+	change(x&lt;&lt;1,l,mid,ql,qr);change(x&lt;&lt;1|1,mid+1,r,ql,qr);
+	mx[x]=max(mx[x&lt;&lt;1],mx[x&lt;&lt;1|1]);
+}
+int query(int x,int l,int r,int qr,int d){
+	if(mx[x]&lt;d||l&gt;qr)return 0;
+	if(l==r)return l;down(x);
+	int mid=(l+r)&gt;&gt;1,dat=query(x&lt;&lt;1|1,mid+1,r,qr,d);
+	if(!dat)dat=query(x&lt;&lt;1,l,mid,qr,d);
+	return dat;
+}
+int main(){
+	scanf(&quot;%d&quot;,&amp;n);build(1,1,n);
+	for(int i=1;i&lt;=n;i++)scanf(&quot;%d&quot;,&amp;a[i]),p[a[i]]=i;
+	scanf(&quot;%d&quot;,&amp;m);
+	for(int i=1;i&lt;=m;i++)scanf(&quot;%d%d&quot;,&amp;q[i].l,&amp;q[i].r),q[i].id=i;
+	sort(q+1,q+m+1,cmp);
+	for(int i=1,j=0;i&lt;=n;i++){
+		if(a[i]&gt;1&amp;&amp;p[a[i]-1]&lt;i)change(1,1,n,1,p[a[i]-1]);
+		if(a[i]&lt;n&amp;&amp;p[a[i]+1]&lt;i)change(1,1,n,1,p[a[i]+1]);
+		while(j&lt;m&amp;&amp;q[j+1].r&lt;=i)pq.push(q[++j]);
+		while(pq.size()){
+			node x=pq.top();int d=query(1,1,n,x.l,i);
+			if(d)L[x.id]=d,R[x.id]=i,pq.pop();else break;
+		}
+	}
+	for(int i=1;i&lt;=m;i++)printf(&quot;%d %d\n&quot;,L[i],R[i]);
+	return 0;
+}
+</code></pre>
+<h4 id="在线做法">在线做法</h4>
+<p>如果询问区间长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，那么答案就是它本身，否则，一定会包含一些长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 的区间。<br>
+考虑这些长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 的区间。如果答案中包含 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>i</mi><mo separator="true">,</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[i,i+1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 这个区间，那么 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>a</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo separator="true">,</mo><mi>a</mi><mo>[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo>]</mo><mo>)</mo><mo separator="true">,</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>a</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo separator="true">,</mo><mi>a</mi><mo>[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo>]</mo><mo>)</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">[min(a[i],a[i+1]),max(a[i],a[i+1])]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mclose">)</span><span class="mclose">]</span></span></span></span> 这些数都应该出现。这像是一个选某元素就必须选某元素的模型，可以建好图之后缩SCC解决。然后发现这个连边方式就是点向区间连边。所以线段树优化建图。但是最后需要求一个点可以到达多少点，这个很难求。不过这种连边方式（点向包含自己的区间连边）决定了最后能到达的点也是一段区间。于是记录 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l,r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span> 即可。处理询问时就询问这区间内左端点最小值和右端点最大值即可。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define pb push_back
+using namespace std;
+const int N=1e5+50,inf=1e9,M=N*3;
+int n,m,a[N],lc[M],rc[M],cnt,rt,dfn[M],low[M],st[M],tp,bel[M],scc,clk;bool ins[M];
+struct node{int mn,mx;node operator +(const node &amp;b){return node{min(mn,b.mn),max(mx,b.mx)};}}t[N*4],dat[N*4],dd[M];
+vector&lt;int&gt;v[M],vv[M];
+void build(int x,int l,int r){
+	if(l==r){t[x]=dat[l];return;}
+	int mid=(l+r)&gt;&gt;1;
+	build(x&lt;&lt;1,l,mid);build(x&lt;&lt;1|1,mid+1,r);
+	t[x]=t[x&lt;&lt;1]+t[x&lt;&lt;1|1];
+}
+node query(int x,int l,int r,int ql,int qr){
+	if(l&gt;qr||r&lt;ql)return node{inf,-inf};
+	if(l&gt;=ql&amp;&amp;r&lt;=qr)return t[x];
+	int mid=(l+r)&gt;&gt;1;
+	return query(x&lt;&lt;1,l,mid,ql,qr)+query(x&lt;&lt;1|1,mid+1,r,ql,qr);
+}
+void build2(int &amp;x,int l,int r){
+	if(l==r){x=l;return;}
+	int mid=(l+r)&gt;&gt;1;x=++cnt;
+	build2(lc[x],l,mid);build2(rc[x],mid+1,r);
+	v[x].pb(lc[x]);v[x].pb(rc[x]);
+}
+void change(int x,int l,int r,int ql,int qr,int d){
+	if(l&gt;qr||r&lt;ql)return;
+	if(l&gt;=ql&amp;&amp;r&lt;=qr){v[d].pb(x);return;}
+	int mid=(l+r)&gt;&gt;1;
+	change(lc[x],l,mid,ql,qr,d);
+	change(rc[x],mid+1,r,ql,qr,d);
+}
+void cmin(int &amp;x,int y){y&lt;x?x=y:0;}
+void cmax(int &amp;x,int y){y&gt;x?x=y:0;}
+void tarjan(int x){
+	dfn[x]=low[x]=++clk;st[++tp]=x;ins[x]=1;
+	for(int i=0,y;i&lt;v[x].size();i++)
+		if(!dfn[y=v[x][i]])tarjan(y),cmin(low[x],low[y]);
+		else if(ins[y])cmin(low[x],dfn[y]);
+	if(dfn[x]==low[x]){
+		int y;scc++;
+		do y=st[tp--],ins[y]=0,bel[y]=scc,vv[scc].pb(y);while(y!=x);
+	}
+}
+int main(){
+	scanf(&quot;%d&quot;,&amp;n);
+	for(int i=1;i&lt;=n;i++)scanf(&quot;%d&quot;,&amp;a[i]),dat[a[i]]=node{i,i};
+	build(1,1,n);cnt=n-1;build2(rt,1,n-1);
+	for(int i=1;i&lt;n;i++){
+		node x=query(1,1,n,min(a[i],a[i+1]),max(a[i],a[i+1]));
+		change(rt,1,n-1,x.mn,x.mx-1,i);
+	}
+	tarjan(rt);
+	for(int i=1;i&lt;=scc;i++){
+		dd[i].mn=inf;dd[i].mx=-inf;
+		for(int j=0,x;j&lt;vv[i].size();j++){
+			if((x=vv[i][j])&lt;n)cmin(dd[i].mn,x),cmax(dd[i].mx,x+1);
+			for(int k=0,y;k&lt;v[x].size();k++)
+				if(bel[y=v[x][k]]!=i)dd[i]=dd[i]+dd[bel[y]];
+		}
+	}
+	for(int i=1;i&lt;n;i++)dat[i]=dd[bel[i]];build(1,1,n);
+	scanf(&quot;%d&quot;,&amp;m);
+	for(int i=1,l,r;i&lt;=m;i++){
+		scanf(&quot;%d%d&quot;,&amp;l,&amp;r);
+		if(l==r)printf(&quot;%d %d\n&quot;,l,r);
+		else{
+			node x=query(1,1,n,l,r-1);
+			printf(&quot;%d %d\n&quot;,x.mn,x.mx);
+		}
+	}
+	return 0;
+}
+</code></pre>
+<h3 id="析合树做法">析合树做法</h3>
+<p>对于一个连续段，如果不存在与它相交但没有相互包含关系的连续段，则它被成为本原段。</p>
+<p>可以发现所有本原段之间形成树形结构，析合树就是这个树形结构。</p>
+<p>析合树的节点分为析点和合点。</p>
+<p>析点的性质为任意一段连续的儿子构成的序列不是连续段。<br>
+合点性质为任意一段连续的儿子构成的序列都是连续段。</p>
+<p>根据本原段的定义，可以发现所有的连续段，要么是一个析点，要么是合点的一段连续的儿子。（比较显然）</p>
+<p>那么构建出析合树之后，对于询问 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo separator="true">,</mo><mi>r</mi></mrow><annotation encoding="application/x-tex">l,r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>，找到这两个点的 lca，如果是析点那就是它，如果是合点那就是它向下伸出的两个儿子。所以关键就是构建析合树。</p>
+<p>增量构建。用栈维护当前森林最右端的链。关键地方看注释咯。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define L x&lt;&lt;1
+#define R x&lt;&lt;1|1
+#define M ((l+r)&gt;&gt;1)
+#define pb push_back
+using namespace std;
+const int N=2e5+50;
+int n,m,a[N],p[N],mn[20][N],mx[20][N],lo[N],t[N*4],laz[N*4],ll[N],rr[N],f[N][20],cnt,st[N],tp,is_he[N],mm[N],rt,d[N],id[N];
+vector&lt;int&gt;v[N];
+int read(){
+    int x=0,c;
+    while(!isdigit(c=getchar()));
+    while(isdigit(c))x=x*10+c-48,c=getchar();
+    return x;
+}
+int gmx(int l,int r){
+    int p=lo[r-l+1];
+    return max(mx[p][l],mx[p][r-(1&lt;&lt;p)+1]);
+}
+int gmn(int l,int r){
+    int p=lo[r-l+1];
+    return min(mn[p][l],mn[p][r-(1&lt;&lt;p)+1]);
+}
+bool chk(int l,int r){return gmx(l,r)-gmn(l,r)==r-l;}//ST表查一下这个区间是否为连续段
+void build(int x,int l,int r){
+    if(l==r){t[x]=l;return;}
+    build(L,l,M);build(R,M+1,r);
+    t[x]=max(t[L],t[R]);
+}
+void mdf(int x,int d){t[x]+=d;laz[x]+=d;}
+void down(int x){
+    if(laz[x])mdf(L,laz[x]),mdf(R,laz[x]),laz[x]=0;
+}
+void change(int x,int l,int r,int ql,int qr){
+    if(l&gt;qr||r&lt;ql)return;
+    if(l&gt;=ql&amp;&amp;r&lt;=qr){mdf(x,1);return;}
+    down(x);
+    change(L,l,M,ql,qr);change(R,M+1,r,ql,qr);
+    t[x]=max(t[L],t[R]);
+}
+int query(int x,int l,int r,int d){
+    if(t[x]&lt;d)return 0;
+    if(l==r)return l;down(x);
+    int ret=query(L,l,M,d);
+    if(!ret)ret=query(R,M+1,r,d);
+    return ret;
+}
+void dfs(int x){
+    d[x]=d[f[x][0]]+1;
+    for(int i=0;i&lt;17;i++)f[x][i+1]=f[f[x][i]][i];
+    for(int i=0,y;i&lt;v[x].size();i++)f[y=v[x][i]][0]=x,dfs(y);
+}
+int lca(int x,int y){
+    if(d[x]&lt;d[y])swap(x,y);
+    for(int i=17;~i;i--)if(d[f[x][i]]&gt;=d[y])x=f[x][i];
+    if(x==y)return x;
+    for(int i=17;~i;i--)if(f[x][i]!=f[y][i])x=f[x][i],y=f[y][i];
+    return f[x][0];
+}
+int Son(int x,int y){
+    for(int i=17;~i;i--)if(d[f[y][i]]&gt;d[x])y=f[y][i];
+    return y;
+}
+int main(){
+    scanf(&quot;%d&quot;,&amp;n);
+    for(int i=1;i&lt;=n;i++)mn[0][i]=mx[0][i]=a[i]=read(),p[a[i]]=i;
+    for(int i=2;i&lt;=n;i++)lo[i]=lo[i&gt;&gt;1]+1;
+    for(int i=1;i&lt;=16;i++)
+        for(int j=1;j+(1&lt;&lt;i)-1&lt;=n;j++)
+            mn[i][j]=min(mn[i-1][j],mn[i-1][j+(1&lt;&lt;i-1)]),
+            mx[i][j]=max(mx[i-1][j],mx[i-1][j+(1&lt;&lt;i-1)]);
+    build(1,1,n);
+    for(int i=1;i&lt;=n;i++){
+        if(a[i]&gt;1&amp;&amp;p[a[i]-1]&lt;i)change(1,1,n,1,p[a[i]-1]);
+        if(a[i]&lt;n&amp;&amp;p[a[i]+1]&lt;i)change(1,1,n,1,p[a[i]+1]);
+        int l=query(1,1,n,i),now=++cnt;id[i]=now;//l是以i为右端点的连续段最靠左的左端点
+        ll[now]=rr[now]=i;// 这里的 L,R 是指值域的上下界
+        while(tp&amp;&amp;l&lt;=ll[st[tp]]){
+            if(is_he[st[tp]]&amp;&amp;chk(mm[st[tp]],i))// 判断是否能成为儿子，如果能就做（给合点再加一个儿子）
+                v[st[tp]].pb(now),rr[st[tp]]=i,now=st[tp--];
+            else if(chk(ll[st[tp]],i)){// 合点一定是被这样建出来的
+                is_he[++cnt]=1;v[cnt].pb(st[tp]);v[cnt].pb(now);
+                ll[cnt]=ll[st[tp--]];rr[cnt]=i;
+                mm[cnt]=ll[now];now=cnt;//这里M数组的作用是保证合点的性质
+            }
+            else{//构建一个析点。这里就是我们需要数据结构维护的原因。我们需要知道是否存在这么一个析点。
+                v[++cnt].pb(now);now=cnt;
+                // 如果从当前结点开始不能构成连续段，就合并。
+                // 直到找到一个结点能构成连续段。而且我们一定能找到这样一个节点
+                while(!chk(ll[st[tp]],i))v[cnt].pb(st[tp--]);
+                ll[cnt]=ll[st[tp]];rr[cnt]=i;v[cnt].pb(st[tp--]);
+            }
+        }
+        st[++tp]=now;
+    }
+    dfs(rt=st[1]);scanf(&quot;%d&quot;,&amp;m);
+    for(int i=1,l,r;i&lt;=m;i++){
+        scanf(&quot;%d%d&quot;,&amp;l,&amp;r);
+        int x=id[l],y=id[r],z=lca(x,y);
+        if(is_he[z])printf(&quot;%d %d\n&quot;,ll[Son(z,x)],rr[Son(z,y)]);
+        else printf(&quot;%d %d\n&quot;,ll[z],rr[z]);
+    }
+    return 0;
+}
+</code></pre>
+<p>关于这个数据结构维护，有两种思路。本代码是上面“离线做法”中的那种思路，即维护生成子图中的边数的思路。这样较简单。传统的做法中是根据连续段 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>max</mi><mo>⁡</mo><mo>{</mo><msub><mi>a</mi><mi>l</mi></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><msub><mi>a</mi><mi>r</mi></msub><mo>}</mo><mo>−</mo><mi>min</mi><mo>⁡</mo><mo>{</mo><msub><mi>a</mi><mi>l</mi></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><msub><mi>a</mi><mi>r</mi></msub><mo>}</mo><mo>−</mo><mo>(</mo><mi>r</mi><mo>−</mo><mi>l</mi><mo>)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\max\{a_l...a_r\}-\min\{a_l...a_r\}-(r-l)=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">{</span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">min</span><span class="mopen">{</span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 的性质，维护这个值的最小值。还需要用两个单调栈辅助修改，比较麻烦。<br>
+<img src="https://prutekoi.github.io/post-images/1585537608058.png" alt="" loading="lazy"><br>
+三种做法切爆此题hhh</p>
+<p>还有一些性质...析点的儿子个数至少 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 个（否则不可能满足析点的性质），且儿子个数大于等于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 个的析点都有可能存在（2,4,6...n,1,3,5...或 4,6,8...n-1,1,3,5...n,2）。</p>
+<p>然后给一些资料的链接吧。<a href="https://blog.csdn.net/qq_35950004/article/details/95346869">构建非排列的析合树</a>，<a href="https://loj.ac/problem/6632">用到析合树的生成函数题/jk</a>，<a href="https://codeforces.com/contest/997/problem/E">构建析合树的数据结构维护部分（前置技能）</a>，<a href="https://blog.csdn.net/weixin_30487317/article/details/99364236"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> 构建的方法</a></p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://prutekoi.github.io/post/hen-niu-bi-de-jing-li/">
+                  <h3 class="post-title">
+                    很牛逼的经历
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '7d25e626199673e220e3',
+        clientSecret: '18275839c46c0e4e748c553c6a30d28aca3f634a',
+        repo: 'Prutekoi.github.io',
+        owner: 'Prutekoi',
+        admin: ['Prutekoi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

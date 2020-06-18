@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1585405908174">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1592464833841">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1585405908174" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1592464833841" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -251,6 +251,56 @@ int main(){
             }
     for(int i=0;i&lt;N;i++)ans=(ans+even[i])%mod;
     printf(&quot;%d\n&quot;,(1ll*ans*inv%mod-1+mod)%mod);
+    return 0;
+}
+</code></pre>
+<h3 id="集合幂exp">集合幂exp</h3>
+<p>NOIonline3T3。看洛谷题解大概能看明白。这里要注意的是可以使用背包的lnexp的优化，也可以直接exp。而我们知道平时这两种计算方法是不同的，直接exp只能用于有标号物品的计数，而背包一般用于无标号，式子可以化为polya指数。但在这里，因为我们只关心有用的项，于是非0项最多选一次。这种条件下这两种计算方法就都正确了。</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=3e5+50,mod=1e9+7;
+int n,a[N],mx,lim,f[20][N],b[N],g[20][N],inv[N],ans,mindiv[N],p[N],tot,phi[N];
+int read(){
+    int x=0,c;
+    while(!isdigit(c=getchar()));
+    while(isdigit(c))x=x*10+c-48,c=getchar();
+    return x;
+}
+void FWT(int *a,int op){
+    for(int i=1;i&lt;lim;i&lt;&lt;=1)
+        for(int j=0;j&lt;lim;j+=i&lt;&lt;1)
+            for(int k=0;k&lt;i;k++)
+                (a[i+j+k]+=op*a[j+k])%=mod;
+}
+int main(){
+    scanf(&quot;%d&quot;,&amp;n);
+    for(int i=1,x;i&lt;=n;i++)a[x=read()]++,mx=max(mx,x);
+    lim=1;n=0;while(lim&lt;=mx)lim&lt;&lt;=1,n++;
+    inv[1]=b[1]=phi[1]=1;
+    for(int i=2;i&lt;=lim;i++){
+        b[i]=b[i&gt;&gt;1]+(i&amp;1);inv[i]=mod-1ll*mod/i*inv[mod%i]%mod;
+        if(!mindiv[i])mindiv[i]=p[++tot]=i,phi[i]=i-1;
+        for(int j=1,y;j&lt;=tot&amp;&amp;p[j]&lt;=mindiv[i]&amp;&amp;(y=p[j]*i)&lt;=lim;j++)
+            mindiv[y]=p[j],phi[y]=phi[i]*(i%p[j]?p[j]-1:p[j]);
+    }
+    for(int i=1;i&lt;lim;i++)f[b[i]][i]=a[i];
+    for(int i=1;i&lt;=n;i++){
+        FWT(f[i],1);
+        for(int j=0;j&lt;lim;j++)f[i][j]=1ll*f[i][j]*i%mod;
+    }
+    for(int i=0;i&lt;lim;i++){
+        g[0][i]=1;
+        for(int j=1;j&lt;=n;j++){
+            int dat=0;
+            for(int k=1;k&lt;=j;k++)
+                dat=(dat+1ll*f[k][i]*g[j-k][i])%mod;
+            g[j][i]=1ll*dat*inv[j]%mod;
+        }
+    }
+    for(int i=0;i&lt;=n;i++)FWT(g[i],-1);
+    for(int i=0;i&lt;lim;i++)ans=(ans+1ll*g[b[i]][i]*phi[i+1])%mod;
+    for(int i=1;i&lt;=a[0];i++)ans=2*ans%mod;
+    cout&lt;&lt;(ans+mod)%mod;
     return 0;
 }
 </code></pre>

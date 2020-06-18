@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1585405908174">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1592464833841">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1585405908174" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1592464833841" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -241,6 +241,47 @@ int main(){
 }
 </code></pre>
 <p>真恶心了。。有生之年再来补吧。。</p>
+<p><a href="https://www.cnblogs.com/meowww/archive/2017/02/27/6475952.html">这篇博客</a>有详细证明</p>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+#define pb push_back
+using namespace std;
+const int N=2e5+50;
+int n,m,dfn[N],idfn[N],fa[N],cnt,sdom[N],idom[N],f[N],g[N],sz[N],p[N];
+vector&lt;int&gt;v[N],vv[N],hav[N];
+void dfs(int x){
+    idfn[dfn[x]=++cnt]=x;
+    for(int i=0,y;i&lt;v[x].size();i++)
+        if(!dfn[y=v[x][i]])fa[y]=x,dfs(y);
+}
+int find(int x){
+    if(f[x]==x)return x;
+    int ff=f[x];f[x]=find(ff);
+    dfn[sdom[g[ff]]]&lt;dfn[sdom[g[x]]]?g[x]=g[ff]:0;
+    return f[x];
+}
+int main(){//以下比较均为dfs序比较（用dfs序重编号了）
+    //只有两个重要结论：sdom(w)=min({u|(u,w)\in E}并{sdom(u)|u&gt;w,存在(v,w)\in E,u是v祖先})（这个还是很好证的，感性也好理解）
+    //令u为所有在sdom(w)到w链上的点（除了sdom(w)）中sdom最小的点，则(idom(w)=sdom(u)&lt;sdom(w)?idom(u):sdom(w))（这个证起来就很神仙）
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    for(int i=1,x,y;i&lt;=m;i++)
+        scanf(&quot;%d%d&quot;,&amp;x,&amp;y),
+        v[x].pb(y),vv[y].pb(x);
+    dfs(1);for(int i=1;i&lt;=n;i++)g[i]=sdom[i]=f[i]=i;
+    for(int i=n;i&gt;1;i--){//计算sdom按dfs序倒序好计算
+        int x=idfn[i],mn=n;
+        for(int j=0,y;j&lt;vv[x].size();j++)
+            find(y=vv[x][j]),mn=min(mn,dfn[sdom[g[y]]]);
+        hav[sdom[x]=idfn[mn]].pb(x);f[x]=fa[x];x=fa[x];
+        for(int j=0,y;j&lt;hav[x].size();j++)//访问到x说明x的子树都访问完了，而fa[x]没有访问过，这时可以正确地更新所有sdom是fa[x]的点的u。
+            find(y=hav[x][j]),p[y]=g[y];
+        hav[x].clear();
+    }
+    for(int i=2,x;i&lt;=n;i++)x=idfn[i],idom[x]=sdom[p[x]]^sdom[x]?idom[p[x]]:sdom[x];
+    for(int i=n,x;i;i--)sz[x=idfn[i]]++,sz[idom[x]]+=sz[x];
+    for(int i=1;i&lt;=n;i++)printf(&quot;%d &quot;,sz[i]);
+    return 0;
+}
+</code></pre>
 
             </div>
             

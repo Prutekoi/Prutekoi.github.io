@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1585405908174">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1592464833841">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1585405908174" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1592464833841" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -115,7 +115,7 @@
 <p>定义:</p>
 <blockquote>
 <p>有向完全图称为竞赛图。<br>
-不重不漏地经过图上所有点的路径叫做哈密顿通路。<br>
+不重不漏地经过图上所有点的简单路径叫做哈密顿通路。<br>
 最后回到起点的哈密顿通路叫做哈密顿回路。</p>
 </blockquote>
 <p>一些结论:</p>
@@ -145,19 +145,20 @@ for(int i=l;i;i=nxt[i])//r是环上最靠近链的点,r-&gt;l是环上的边,r-&
 	if(r){//尝试在环中插入点i
 		for(int j=l,k=r;;k=j,j=nxt[j]){
 			if(a[i][j]){//在环上找到一个可以作为nxt[i]的点。
-				nxt[k]=nxt[r];j作为了i的后继,那么本来j的前驱k就要另找一个后继了。
+				nxt[k]=nxt[r];//j作为了i的后继,那么本来j的前驱k就要另找一个后继了。（这里注意nxt[r]不一定是i，因为可能前面的一些点没有插入成功）
 				if(k!=r)nxt[r]=l;//本来没有连上的环上的边要连上(k=r的话r的后继在上一句话已经改了,不是l了)
 				l=j,r=i;break;//根据l和r的定义修改l和r
 			}
-			if(j==r)break;
+			if(j==r)break;//确实有可能当前无法插入，但是后面的点一定会有插入成功的，那时这个点也就会进入环内。
 		}
 	}
 	else if(a[i][l])r=i;//这里找到了初始的环
 nxt[r]=l;//这里把最后一条边连上。
 </code></pre>
-<p>我的注释真的有够清楚了qwq肯定能看懂的qwq<br>
-这两条性质对于竞赛图上的问题非常有帮助</p>
-<p>竞赛图上最长路问题<a href="https://www.lydsy.com/JudgeOnline/problem.php?id=4727">BZOJ4727</a>:对于竞赛图上每个点i求出一条从i出发的最长简单路径。</p>
+<p>这个东西可能现推真的很困难吧...细节这么多...又这么巧妙...<br>
+我的注释真的有够清楚了qwq肯定能看懂的qwq<br>
+这两条性质对于竞赛图上的问题非常有帮助<br>
+竞赛图上最长路问题<a href="https://www.lydsy.com/JudgeOnline/problem.php?id=4727">BZOJ4727</a>:对于竞赛图上每个点i求出一条从i出发的最长简单路径。</p>
 <p>解决这个问题还有一个比较显然的结论:</p>
 <blockquote>
 <p>竞赛图对强连通分量缩点后是一条链。</p>

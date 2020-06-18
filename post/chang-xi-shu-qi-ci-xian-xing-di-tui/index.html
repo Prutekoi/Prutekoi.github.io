@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1585405908174">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1592464833841">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1585405908174" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1592464833841" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -247,6 +247,8 @@ int main(){
     return 0;
 }
 </code></pre>
+<p>还有一些东西：由哈密顿卡莱定理，发现如果一个递推关系是连乘一个相同的矩阵，那么这个矩阵的任意一个位置都满足同一个线性递推关系（即矩阵的特征多项式），也可以推出矩阵的任意一些位置的和也满足相同的线性递推。（这样如果一些dp要求某一行或某一列之和之类的就可以求了）<br>
+然后还要注意：线性递推关系不一定就需要快速幂之类的：如果一个dp是类似矩阵乘法的样子，那么可以确定它满足线性递推。那么如果要求 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>≤</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">\leq n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的所有值，可以求出初值和递推式后用分治FFT解决（线性递推其实就是分治FFT的形式）而初值和递推式怎么求就要看题了。最不济就是暴力dp求初值，用BM算法求递推关系。而如果这个矩阵很有特点，可能可以dp求递推式（考虑行列式求特征多项式）（而往往还能考虑转移路径进一步用组合数优化）然后也可以快速幂求一个很靠后的值。</p>
 
             </div>
             

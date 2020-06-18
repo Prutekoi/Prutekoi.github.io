@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>关于AC自动机和广义SAM | Prutekoi&#39;s blog</title>
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1592464833841">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153103856-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-153103856-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://prutekoi.github.io">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1592464833841" class="site-logo">
+        <h1 class="site-title">Prutekoi&#39;s blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://prutekoi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">关于AC自动机和广义SAM</h2>
+            <div class="post-date">2020-04-30</div>
+            
+            <div class="post-content">
+              <p>众所周知AC自动机和广义SAM都可以用来解决多串匹配问题。我曾经一度以为广义SAM无法替代AC自动机。而且U群也这么说过。当时U群说的是“阿狸的打字机有SAM做法了嘛？”<br>
+然而还真有2333</p>
+<p>首先说AC自动机和广义SAM做多串匹配的原理。<br>
+它们都可以解决多个模式串在一个文本串中的匹配问题。（AC自动机模板题是询问每个串模式串在文本串中各出现几次）<br>
+做法都是先把所有模式串建出自动机，然后用文本串在上面运行。然后每次把以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 为结尾的所有串（前缀 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的所有后缀）的贡献根据树形结构统计上，最后得到答案。</p>
+<p>而AC自动机在运行过程中所在的节点是最长的类似&quot;border&quot;的结构，广义SAM就是最长公共子串了。然而一个模式串在文本串中出现的条件就是最长“border”长度与最长公共子串长度都等于串长，于是它们都可以做匹配问题。而且AC自动机还可以做“每个模式串的前缀在文本串中出现次数”的问题。因为trie树上有所有串前缀的信息。相应的，因为SAM中存有所有子串的信息（所有的子串都有对应的节点），所以它大概也可以做“每个模式串的子串在文本串中出现次数”的问题。</p>
+<p>其实我们可以发现，AC自动机中存储的信息无非就是每个模式串的前缀对应节点、fail边。然而这些信息在SAM上都有对应。前缀也可以找到对应节点，fail边也就是par边。所以SAM基本可以干AC自动机的所有事情了。</p>
+<p>然后讨论一些细节：每个串前缀一定是所在状态的mxlen。因为不可能有一个串endpos与它相同且更长了。<br>
+所以我们在一些AC自动机问题上运用SAM的话，在SAM上运行文本串时要记录当前匹配长度（求最长公共子串时的操作）。如果当前匹配长度就是所在节点mxlen，那么这个节点也可以贡献到。否则（因为我们只关注前缀，而前缀都是mxlen），所以我们贡献到它父亲上即可。</p>
+<p>还有，AC自动机还可以处理一些dp问题，其实SAM也可以的。可能你会觉得我们在运行的时候还需要记录当前匹配长度啊，那不是两维状态了么？有一个结论：一个状态走一个转移边mxlen至少加1。这是显然的。于是我们发现如果当前不满足“当前匹配长度就是所在节点mxlen”，那么再转移也依旧不会满足。于是只要记录两维状态：f[i][0/1]表示当前在第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 个节点，是否满足那个条件。预处理转移就像建AC自动机一样bfs即可。于是发现用SAM跑dp常数会乘 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>。因为节点数乘2，还要多记状态。这也是一个比AC自动机劣的地方。</p>
+<p>而且AC自动机有一个硬伤：当字符集大的时候它是没有什么科学的处理办法的。众多周知建AC自动机的一个科学做法是建trie图。然而建trie图需要对每个点都遍历一下字符集。而不建trie图的话找fail边又需要暴力跳fail。在字符集达到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> 时这都是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> 的。所以现在可以发现阿狸的打字机反而可以加强卡掉AC自动机。</p>
+<p>而SAM大概唯一能卡的地方就在于它空间 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 倍。如果卡空间，那么大概就只能写AC自动机了。。。</p>
+<p>最后贴一个用广义SAM写的AC自动机板子</p>
+<pre><code>#include&lt;bits/stdc++.h&gt;
+#define pb push_back
+using namespace std;
+const int N=4e5+50,M=2e6+50;
+int n,cnt=1,p[N],lst,mxlen[N],par[N],trans[N][26],num[N];char s[M];
+vector&lt;int&gt;v[N];
+void extend(int c){
+    int p=lst,cur=0;
+    if(!trans[p][c])cur=++cnt,mxlen[cur]=mxlen[p]+1;
+    for(;p&amp;&amp;!trans[p][c];p=par[p])trans[p][c]=cur;
+    if(!p)par[cur]=1;
+    else{
+        int q=trans[p][c];
+        if(mxlen[q]==mxlen[p]+1)cur?par[cur]=q:cur=q;
+        else{
+            int nq=++cnt;
+            memcpy(trans[nq],trans[q],sizeof(trans[q]));
+            mxlen[nq]=mxlen[p]+1;par[nq]=par[q];
+            par[q]=nq;cur?par[cur]=nq:cur=nq;
+            for(;p&amp;&amp;trans[p][c]==q;p=par[p])trans[p][c]=nq;
+        }
+    }
+    lst=cur;
+}
+void dfs(int x){
+	for(int i=0,y;i&lt;v[x].size();i++)
+		dfs(y=v[x][i]),num[x]+=num[y];
+}
+int main(){
+    scanf(&quot;%d&quot;,&amp;n);
+	for(int i=1,ll;i&lt;=n;i++){
+		scanf(&quot;%s&quot;,s+1);lst=1;
+		for(int j=1;s[j];j++)extend(s[j]-'a');
+		p[i]=lst;
+	}
+	for(int i=1;i&lt;=cnt;i++)v[par[i]].pb(i);
+	scanf(&quot;%s&quot;,s+1);int len=strlen(s+1);
+	for(int i=1,p=1,fl=1,y;i&lt;=len;i++){
+		int c=s[i]-'a';
+		while(p!=1&amp;&amp;!trans[p][c])p=par[p],fl=1;
+		if((y=trans[p][c]))mxlen[y]!=mxlen[p]+1?fl=0:0,p=y;
+		num[fl?p:par[p]]++;
+	}
+	dfs(1);
+	for(int i=1;i&lt;=n;i++)printf(&quot;%d\n&quot;,num[p[i]]);
+    return 0;
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://prutekoi.github.io/post/du-liu-shi-he-yi-zhong-de-you-qu-jie-lun/">
+                  <h3 class="post-title">
+                    毒瘤十合一中的有趣结论
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '7d25e626199673e220e3',
+        clientSecret: '18275839c46c0e4e748c553c6a30d28aca3f634a',
+        repo: 'Prutekoi.github.io',
+        owner: 'Prutekoi',
+        admin: ['Prutekoi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
