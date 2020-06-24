@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1592464833841">
+<link rel="shortcut icon" href="https://prutekoi.github.io/favicon.ico?v=1593009712041">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://prutekoi.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://prutekoi.github.io">
-        <img src="https://prutekoi.github.io/images/avatar.png?v=1592464833841" class="site-logo">
+        <img src="https://prutekoi.github.io/images/avatar.png?v=1593009712041" class="site-logo">
         <h1 class="site-title">Prutekoi&#39;s blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -183,8 +183,9 @@ int main(){
 }
 </code></pre>
 <p>顺带一提，我在cf上斩获了最短代码qwq</p>
-<h3 id="usaco18jancow-at-large-p"><a href="https://www.luogu.com.cn/problem/P4183">[USACO18JAN]Cow at Large P</a>这题真是提供了树上问题的新思路。</h3>
-<p>首先，他让对于所有的点都求最少多少个农民，一下子不知道该怎么办，那么我们先对只求一个点的问题入手。<br>
+<h3 id="usaco18jancow-at-large-p"><a href="https://www.luogu.com.cn/problem/P4183">[USACO18JAN]Cow at Large P</a></h3>
+<p>这题真是提供了树上问题的新思路。<br>
+首先，他让对于所有的点都求最少多少个农民，一下子不知道该怎么办，那么我们先对只求一个点的问题入手。<br>
 我们设要求的这个点为根，一下子问题好像就变得直观了，那就是你要封锁根的所有子树。<br>
 首先，根的每个儿子都至少需要一个农民。这是显然的。<br>
 那么对于根的一个儿子 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>，如果它能只被一个农民就封锁，我们一定就放一个农民封锁住即可。否则成为了这个儿子的一个递归子问题。<br>
