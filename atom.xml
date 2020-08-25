@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2020-08-25T07:42:33.960Z</updated>
+    <updated>2020-08-25T11:49:39.146Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -77,6 +77,11 @@
 <p>我们单点询问，区间修改这些操作都是只增加 log 个节点。主要问题就在于merge时的下放标记会增加节点个数，这个是不好统计的。然而现在我们只有两边都有儿子时才会继续递归，这时需要下放标记，增加的节点数为“有一个儿子的节点的个数”。而且增加的这个节点一定是没有儿子的。于是只有单点询问，区间修改等操作会增加“有一个儿子的节点的个数”，只会影响log个。于是复杂度就有保证了。</p>
 <p>而当有一边没有儿子时，相当于它掌管的这个区间都相同，于是相当于对另一棵树做了一个区间操作，如支持对应乘的线段树合并，就是对另一棵树执行了一个区间乘。这时打标记退出即可。</p>
 <p>又试了一下d2t1我最后改的那个错拯救了多少分。结果发现不改也能85。发现实际上它确实会访问到负下标，但是只访问到-1，然后后面有个条件判断就break了。然后还莫名其妙地能对，实在是太玄学。</p>
+<h3 id="后记">后记</h3>
+<p>虽然结果还不错，但我仍然是一个缺少勇气又懒惰的人。</p>
+<p>如果让我进队，我可能庆幸过后又会自责，怎么能让我这种没有足够努力的人得到这么好的结果呢？</p>
+<p>希望高考能有一个好的结果吧。</p>
+<p>我真的渴望那种得到好结果后的快乐啊！</p>
 ]]></content>
     </entry>
     <entry>
