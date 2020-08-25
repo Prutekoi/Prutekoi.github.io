@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://prutekoi.github.io</id>
     <title>Prutekoi&apos;s blog</title>
-    <updated>2020-08-25T07:25:35.643Z</updated>
+    <updated>2020-08-25T07:35:41.723Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://prutekoi.github.io"/>
     <link rel="self" href="https://prutekoi.github.io/atom.xml"/>
@@ -56,6 +56,7 @@
 <p>又调了挺久。。我好菜。而且才写了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>85</mn></mrow><annotation encoding="application/x-tex">85</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span><span class="mord">5</span></span></span></span> 分，后面没想到bitset。</p>
 <p>T2老老实实打搜索吧。。搜了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>16</mn></mrow><annotation encoding="application/x-tex">16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">6</span></span></span></span> 分。</p>
 <p>T3啥也不会。。连信仰的直接跑最短路也没敲，因为还在想去T2多拿点分。。最后都没交T3。</p>
+<p>最后在看代码。突然找到了t1的一个错！但是当时已经59分，马上要结束了，不过发现这个东西只要把 <code>for(...;i;...)</code>改成<code>for(...;i&gt;0;...)</code> 就行了。然后敲了两个字符上去保存。</p>
 <p>最后只有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>85</mn><mo>+</mo><mn>16</mn><mo>+</mo><mn>0</mn><mo>=</mo><mn>101</mn></mrow><annotation encoding="application/x-tex">85+16+0=101</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">8</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span></span></span></span>。太崩了。而且出考场怎么听说有好多 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>245</mn></mrow><annotation encoding="application/x-tex">245</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">4</span><span class="mord">5</span></span></span></span> 的？？/yun<br>
 这果然是国家队选拔啊...</p>
 <p>查完分没挂，跟dky在一块边走边聊天，待了很久。祝他文化课顺利。</p>
@@ -75,6 +76,7 @@
 <p>可以分析一下这个正确做法的复杂度。我们知道线段树合并的merge次数是通过执行一次，总节点数就减少 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 来保证的。所以只要能保证总结点数即可。</p>
 <p>我们单点询问，区间修改这些操作都是只增加 log 个节点。主要问题就在于merge时的下放标记会增加节点个数，这个是不好统计的。然而现在我们只有两边都有儿子时才会继续递归，这时需要下放标记，增加的节点数为“有一个儿子的节点的个数”。而且增加的这个节点一定是没有儿子的。于是只有单点询问，区间修改等操作会增加“有一个儿子的节点的个数”，只会影响log个。于是复杂度就有保证了。</p>
 <p>而当有一边没有儿子时，相当于它掌管的这个区间都相同，于是相当于对另一棵树做了一个区间操作，如支持对应乘的线段树合并，就是对另一棵树执行了一个区间乘。这时打标记退出即可。</p>
+<p>又试了一下d2t1我最后改的那个错拯救了多少分。结果发现不改也能85。发现实际上它确实会访问到负下标，但是只访问到-1，然后后面有个条件判断就break了。然后还莫名其妙地能对，实在是太玄学。</p>
 ]]></content>
     </entry>
     <entry>
